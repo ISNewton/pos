@@ -22,26 +22,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::group(['middleware' => 'auth:sanctum'], function () {
+// Route::group(['middleware' => 'auth:sanctum'], function () {
     //All secure URL's
-    Route::post('purchase', [PurchaseController::class, 'purchase']);
 
-    Route::get('account', [AccountController::class, 'index']);
-    Route::get('reports', [ReportController::class, 'sales']);
-
-
-    Route::apiResource('inventory', InventoryController::class);
-    Route::apiResource('suppliers', SupplierController::class);
-    Route::apiResource('sales', SaleController::class);
-
-    Route::post("login_manager", [AuthController::class, 'loginManager']);
-    Route::post("change_password", [AuthController::class, 'changePassword']);
-    Route::post("change_manager_password", [AuthController::class, 'changeManagerPassword']);
-});
-// Route::post('import',[InventoryController::class,'import']);
+// });
 
 
 Route::post("login", [AuthController::class, 'login']);
 
 Route::post("register", [AuthController::class, 'register']);
+
+
+Route::post('purchase', [PurchaseController::class, 'purchase']);
+
+Route::get('account', [AccountController::class, 'index']);
+Route::get('reports', [ReportController::class, 'sales']);
+
+
+Route::apiResource('inventory', InventoryController::class);
+Route::apiResource('suppliers', SupplierController::class);
+Route::apiResource('sales', SaleController::class);
+
+Route::post("login_manager", [AuthController::class, 'loginManager']);
+Route::post("change_password", [AuthController::class, 'changePassword']);
+Route::post("change_manager_password", [AuthController::class, 'changeManagerPassword']);
+// Route::post('import',[InventoryController::class,'import']);
+

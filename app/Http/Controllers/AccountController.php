@@ -13,13 +13,17 @@ class AccountController extends Controller
     {
         $purchase = GeneralInformation::sum('cost');
 
-        $salse = DB::table('sales')
+        $sales = DB::table('sales')
             ->selectRaw('SUM(price * sold_quantity) as sales')
             ->get()
             ->first()
             ;
+            $revenue = $purchase - $sales->sales;
 
-        $revenue = $purchase - $salse->sales;
-        dd($purchase - $salse->sales);
+            return response([
+                'purchase' => $purchase,
+                'revenue' => $revenue,
+                'saels' => $sales->sales,
+            ]);
     }
 }
