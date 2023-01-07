@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\SupplierResource;
 
 class SupplierController extends Controller
 {
@@ -15,7 +16,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::where('user_id',Auth::id())->get();
 
         return SupplierResource::collection($suppliers);
     }
@@ -32,6 +33,8 @@ class SupplierController extends Controller
             'name' => 'required|max:256',
             'phone' => 'required|integer',
         ]);
+
+            $data['user_id'] = Auth::id();
 
         $supplier = Supplier::create($data);
 

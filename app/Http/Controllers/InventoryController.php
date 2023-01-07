@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Imports\InventoryImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\InventoryResource;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -27,6 +28,7 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
         $inventory = Inventory::query()
+        ->where('user_id',Auth::id())
         ->when($request->has('item_name'),function($q) use($request) {
             $q->where('item_name','LIKE',"%{$request->item_name}%");
         })
@@ -53,9 +55,11 @@ class InventoryController extends Controller
             'description' => 'nullable',
             'expiration_date' => 'date',
             'cost' => 'required|numeric',
-            'category' => 'required|numeric',
+            'category' => 'required|string',
             'price' => 'required|numeric',
         ]);
+
+        $data['user_id'] = Auth::id();
 
         $inventory = Inventory::create($data);
 

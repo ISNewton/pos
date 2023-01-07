@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreSaleRequest;
 use App\Models\Inventory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreSaleRequest;
+use App\Http\Resources\SaleResource;
 
 class SaleController extends Controller
 {
@@ -47,6 +49,7 @@ class SaleController extends Controller
                     'price' => $inventory->price,
                     'item_name' => $inventory->item_name,
                     'date_time' => today()->format('Y-m-d'),
+                    'user_id' => Auth::id()
                 ]);
 
 
@@ -65,9 +68,9 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sale $sale)
     {
-        //
+        return SaleResource::make($sale);
     }
 
     /**
@@ -77,9 +80,9 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Sale $sale)
     {
-        //
+        return SaleResource::make($sale);
     }
 
     /**
@@ -88,8 +91,10 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Sale $sale)
     {
-        //
+        $sale->delete();
+
+        return response()->noContent();
     }
 }

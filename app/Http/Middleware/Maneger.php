@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class Maneger
 {
@@ -17,7 +18,7 @@ class Maneger
      */
     public function handle(Request $request, Closure $next)
     {
-        abort_if(session()->get('is_manager') != true,403);
+        abort_if(!session()->get('is_manager'),403,'You are not a manager');
         return $next($request);
     }
 }

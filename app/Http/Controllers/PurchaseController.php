@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\GeneralInformation;
 use Doctrine\Inflector\Rules\Word;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InventoryResource;
 
 class PurchaseController extends Controller
@@ -64,6 +65,8 @@ class PurchaseController extends Controller
                         'cost' => $inventory->cost,
                         'category' => $inventory->category,
                         'supplier_id' =>  isset($product['supplier_id']) ? $product['supplier_id'] : NULL,
+                        'user_id' => Auth::id()
+
                     ]);
                 }
             }

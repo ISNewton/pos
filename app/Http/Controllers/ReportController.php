@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\SaleResource;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 
 class ReportController extends Controller
@@ -19,6 +20,7 @@ class ReportController extends Controller
                 DB::raw('monthname(created_at) as date'),
                 DB::raw('count(*) as views')
             )
+            ->where('user_id',Auth::id())
             ->when(request()->has('from'),fn($q) => $this->checkDate($q))
             ->groupBy('date')
             ->orderByDesc('date')
@@ -29,6 +31,7 @@ class ReportController extends Controller
                 'item_name',
                 DB::raw('count(*) as sales')
             )
+            ->where('user_id',Auth::id())
             ->when(request()->has('from'),fn($q) => $this->checkDate($q))
             ->limit(5)
             ->groupBy('item_name')
@@ -40,6 +43,7 @@ class ReportController extends Controller
                 'item_name',
                 DB::raw('count(*) as sales')
             )
+            ->where('user_id',Auth::id())
             ->when(request()->has('from'),fn($q) => $this->checkDate($q))
             ->groupBy('item_name')
             ->orderBy('sales', 'asc')
@@ -51,6 +55,7 @@ class ReportController extends Controller
                 'barcode',
                 DB::raw('sum(stock_quantity) as stock_quantity')
             )
+            ->where('user_id',Auth::id())
             ->when(request()->has('from'),fn($q) => $this->checkDate($q))
             ->groupBy('barcode')
             ->orderBy('stock_quantity', 'asc')
@@ -76,6 +81,7 @@ class ReportController extends Controller
     public function dashbord()
     {
         $sales = Sale::query()
+        ->where('user_id',Auth::id())
         ->when(request()->has('from'),fn($q) => $this->checkDate($q))
         ->orderByDesc('id')
         ->limit(10)

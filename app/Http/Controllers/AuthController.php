@@ -26,6 +26,8 @@ class AuthController extends Controller
 
         $token = $user->createToken('my-app-token')->plainTextToken;
 
+        unset($user['manager_password']);
+
         $response = [
             'user' => $user,
             'token' => $token
@@ -37,16 +39,16 @@ class AuthController extends Controller
     function loginManager(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required|string',
+            'manager_password' => 'required|string',
         ]);
 
-        if (!Hash::check($request->password, Auth::user()->manager_password)) {
+        if (!Hash::check($request->manager_password, Auth::user()->manager_password)) {
             return response([
                 'message' => ['These credentials do not match our records.']
             ], 404);
         }
 
-        session()->put('isManager',true);
+        session()->put('is_manager',true);
 
         return response()->noContent(200);
     }
@@ -107,10 +109,14 @@ class AuthController extends Controller
 
         $data['type'] = User::USER_MANAGER;
 
+        $data['password'] = Hash::make($request->password);
+        $data['manager_password'] = Hash::make($request->manager_password);
 
         $user = User::create($data);
 
         $token = $user->createToken('my-app-token')->plainTextToken;
+
+        unset($user['manager_password']);
 
         $response = [
             'user' => $user,
@@ -118,6 +124,13 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function logout() {
+        Auth::logout();
+
+        session()->put('is_manager',false);
+        return response()->noContent();
     }
 }
 /*  */
