@@ -106,6 +106,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
             'manager_password' => 'required|string|min:8',
         ]);
+        dd(5);
 
         $data['type'] = User::USER_MANAGER;
 

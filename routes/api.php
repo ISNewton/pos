@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::group(['middleware' => Maneger::class], function () {
+    // Route::group(['middleware' => Maneger::class], function () {
 
         Route::post('purchase', [PurchaseController::class, 'purchase']);
 
@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('suppliers', SupplierController::class);
 
         Route::post("change_manager_password", [AuthController::class, 'changeManagerPassword']);
-    });
+    // });
 
     Route::apiResource('sales', SaleController::class);
 
