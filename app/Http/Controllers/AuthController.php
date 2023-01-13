@@ -60,6 +60,7 @@ class AuthController extends Controller
             'new_password' => 'required|string|min:8',
         ]);
 
+
         if (!Hash::check($request->password, Auth::user()->password)) {
             return response([
                 'message' => ['The password is incorrect.']
@@ -68,9 +69,11 @@ class AuthController extends Controller
 
         $user = User::find(Auth::id());
 
+
         $user->update([
-            'password' => Hash::make($request->new_passowrd)
+            'password' => Hash::make($request->new_password)
         ]);
+
 
         return response($user);
     }
