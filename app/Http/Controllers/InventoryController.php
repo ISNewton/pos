@@ -36,7 +36,7 @@ class InventoryController extends Controller
             $q->where('barcode',$request->barcode);
         })
         ->get();
-        dd($inventory);
+
         return InventoryResource::collection($inventory);
     }
 
