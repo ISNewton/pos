@@ -94,7 +94,7 @@ class AuthController extends Controller
         $user = User::find(Auth::id());
 
         $user->update([
-            'manager_password' => Hash::make($request->new_passowrd)
+            'manager_password' => Hash::make($request->new_password)
         ]);
 
         return response($user);
