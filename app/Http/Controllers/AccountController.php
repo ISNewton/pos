@@ -21,12 +21,12 @@ class AccountController extends Controller
             ->get()
             ->first()
             ;
-            $revenue = $purchase - $sales->sales;
+            $revenue = $sales->sales - $purchase ;
 
             return response([
                 'purchase' => $purchase,
                 'revenue' => $revenue,
-                'saels' => $sales->sales ?? 0,
+                'sales' => $sales->sales ?? 0,
                 'balance' => $revenue,
             ]);
     }
