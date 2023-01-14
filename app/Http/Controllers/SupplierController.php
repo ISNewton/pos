@@ -31,7 +31,7 @@ class SupplierController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|max:256',
-            'phone' => 'required|integer',
+            'phone' => 'required|string',
         ]);
 
             $data['user_id'] = Auth::id();
@@ -69,7 +69,7 @@ class SupplierController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|max:256',
-            'phone' => 'required|integer',
+            'phone' => 'required|string',
         ]);
 
         $supplier->update($data);
