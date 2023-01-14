@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Laravel Documentation</title>
+    <title>POS Documentation</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var baseUrl = "http://localhost";
+        var baseUrl = "http://localhost:8000";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -80,6 +80,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-reports">
                                 <a href="#endpoints-GETapi-reports">GET api/reports</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-sales_report">
+                                <a href="#endpoints-GETapi-sales_report">GET api/sales_report</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-inventory">
                                 <a href="#endpoints-GETapi-inventory">Display a listing of the resource.</a>
                             </li>
@@ -110,6 +113,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-suppliers--id-">
                                 <a href="#endpoints-DELETEapi-suppliers--id-">Remove the specified resource from storage.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-change_manager_password">
+                                <a href="#endpoints-POSTapi-change_manager_password">POST api/change_manager_password</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-sales">
                                 <a href="#endpoints-GETapi-sales">Display a listing of the resource.</a>
                             </li>
@@ -131,8 +137,8 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-change_password">
                                 <a href="#endpoints-POSTapi-change_password">POST api/change_password</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-change_manager_password">
-                                <a href="#endpoints-POSTapi-change_manager_password">POST api/change_manager_password</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-logout">
+                                <a href="#endpoints-POSTapi-logout">POST api/logout</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-login">
                                 <a href="#endpoints-POSTapi-login">POST api/login</a>
@@ -151,7 +157,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: January 2, 2023</li>
+        <li>Last updated: January 14, 2023</li>
     </ul>
 </div>
 
@@ -160,14 +166,16 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost</code>
+    <strong>Base URL</strong>: <code>http://localhost:8000</code>
 </aside>
 <p>This documentation aims to provide all the information you need to work with our API.</p>
 <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
 You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>This API is not authenticated.</p>
+<p>Authenticate requests to this API's endpoints by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
 
         <h1 id="endpoints">Endpoints</h1>
 
@@ -176,6 +184,7 @@ You can switch the language used with the tabs at the top right (or from the nav
                                 <h2 id="endpoints-POSTapi-purchase">Display a listing of the resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -186,16 +195,17 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/purchase" \
+    "http://localhost:8000/api/purchase" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"products\": [
         {
-            \"id\": \"sed\",
-            \"quantity\": 9,
-            \"cost\": 601,
-            \"price\": 2056575
+            \"id\": \"veniam\",
+            \"quantity\": 3,
+            \"cost\": 56.703000000000002955857780762016773223876953125,
+            \"price\": 33.034930000000002792148734442889690399169921875
         }
     ]
 }"
@@ -204,10 +214,11 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/purchase"
+    "http://localhost:8000/api/purchase"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -215,10 +226,10 @@ const headers = {
 let body = {
     "products": [
         {
-            "id": "sed",
-            "quantity": 9,
-            "cost": 601,
-            "price": 2056575
+            "id": "veniam",
+            "quantity": 3,
+            "cost": 56.703000000000002955857780762016773223876953125,
+            "price": 33.034930000000002792148734442889690399169921875
         }
     ]
 };
@@ -232,7 +243,31 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-purchase">
-</span>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+access-control-allow-origin: *
+set-cookie: pos_session=TuyaxHm5KKyZg0l0ZfR7QCIzo2jTuAZ0bfreERXc; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The selected products.0.id is invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;products.0.id&quot;: [
+            &quot;The selected products.0.id is invalid.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-purchase" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-purchase"></span>:
@@ -245,7 +280,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-purchase" data-method="POST"
       data-path="api/purchase"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -272,6 +307,17 @@ fetch(url, {
             <b><code>api/purchase</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-purchase"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -310,10 +356,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="products.0.id"                data-endpoint="POSTapi-purchase"
-               value="sed"
+               value="veniam"
                data-component="body">
     <br>
-<p>Example: <code>sed</code></p>
+<p>Example: <code>veniam</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
@@ -321,10 +367,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="products.0.quantity"                data-endpoint="POSTapi-purchase"
-               value="9"
+               value="3"
                data-component="body">
     <br>
-<p>Example: <code>9</code></p>
+<p>Example: <code>3</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>cost</code></b>&nbsp;&nbsp;
@@ -332,10 +378,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="products.0.cost"                data-endpoint="POSTapi-purchase"
-               value="601"
+               value="56.703"
                data-component="body">
     <br>
-<p>Example: <code>601</code></p>
+<p>Example: <code>56.703</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>price</code></b>&nbsp;&nbsp;
@@ -343,10 +389,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="products.0.price"                data-endpoint="POSTapi-purchase"
-               value="2056575"
+               value="33.03493"
                data-component="body">
     <br>
-<p>Example: <code>2056575</code></p>
+<p>Example: <code>33.03493</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>supplier_id</code></b>&nbsp;&nbsp;
@@ -366,6 +412,7 @@ fetch(url, {
                     <h2 id="endpoints-GETapi-account">GET api/account</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -376,17 +423,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/account" \
+    --get "http://localhost:8000/api/account" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/account"
+    "http://localhost:8000/api/account"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -409,14 +458,16 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 59
+x-ratelimit-remaining: 58
 access-control-allow-origin: *
+set-cookie: pos_session=g32sQ9jRrt5vN7nwUgKEOWCZa8rn6LQqZeHdfK8W; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;purchase&quot;: 6869.84000000000014551915228366851806640625,
-    &quot;revenue&quot;: -111233968.1599999964237213134765625,
-    &quot;saels&quot;: 111240838
+    &quot;purchase&quot;: 0,
+    &quot;revenue&quot;: 0,
+    &quot;saels&quot;: 0,
+    &quot;balance&quot;: 0
 }</code>
  </pre>
     </span>
@@ -432,7 +483,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-account" data-method="GET"
       data-path="api/account"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -460,6 +511,17 @@ access-control-allow-origin: *
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-account"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -486,6 +548,7 @@ access-control-allow-origin: *
                     <h2 id="endpoints-GETapi-reports">GET api/reports</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -496,17 +559,19 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/reports" \
+    --get "http://localhost:8000/api/reports" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/reports"
+    "http://localhost:8000/api/reports"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -529,87 +594,16 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 58
+x-ratelimit-remaining: 57
 access-control-allow-origin: *
+set-cookie: pos_session=lMFdc5EMB8VnbFdW1823mojOq3MJKWBehUK8R5HU; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;storeMovement&quot;: [
-        {
-            &quot;date&quot;: &quot;January&quot;,
-            &quot;views&quot;: 1
-        },
-        {
-            &quot;date&quot;: &quot;December&quot;,
-            &quot;views&quot;: 168865
-        }
-    ],
-    &quot;bestSelling&quot;: [
-        {
-            &quot;item_name&quot;: &quot;Pepsi 300ml&quot;,
-            &quot;sales&quot;: 37482
-        },
-        {
-            &quot;item_name&quot;: &quot;Safia Water 600ml&quot;,
-            &quot;sales&quot;: 21658
-        },
-        {
-            &quot;item_name&quot;: &quot;Capo Fresh Milk 1L&quot;,
-            &quot;sales&quot;: 15980
-        },
-        {
-            &quot;item_name&quot;: &quot;Looli Beef Sausage 500g&quot;,
-            &quot;sales&quot;: 15446
-        },
-        {
-            &quot;item_name&quot;: &quot;Capo Set Yogurt 800g&quot;,
-            &quot;sales&quot;: 15266
-        }
-    ],
-    &quot;leastSelling&quot;: [
-        {
-            &quot;item_name&quot;: null,
-            &quot;sales&quot;: 2
-        },
-        {
-            &quot;item_name&quot;: &quot;Yara Sunflower Oil 1L&quot;,
-            &quot;sales&quot;: 2826
-        },
-        {
-            &quot;item_name&quot;: &quot;Alnasr Sesame Oil 225ml&quot;,
-            &quot;sales&quot;: 2856
-        },
-        {
-            &quot;item_name&quot;: &quot;Alwaha Luxury Tea 100g&quot;,
-            &quot;sales&quot;: 3506
-        },
-        {
-            &quot;item_name&quot;: &quot;Butterfly Tomato Paste 400g&quot;,
-            &quot;sales&quot;: 3604
-        }
-    ],
-    &quot;lowStock&quot;: [
-        {
-            &quot;barcode&quot;: &quot;5285000395164&quot;,
-            &quot;stock_quantity&quot;: 0
-        },
-        {
-            &quot;barcode&quot;: &quot;6217000119951&quot;,
-            &quot;stock_quantity&quot;: 250
-        },
-        {
-            &quot;barcode&quot;: &quot;6224001125010&quot;,
-            &quot;stock_quantity&quot;: 300
-        },
-        {
-            &quot;barcode&quot;: &quot;8212634901116&quot;,
-            &quot;stock_quantity&quot;: 350
-        },
-        {
-            &quot;barcode&quot;: &quot;6161106641055&quot;,
-            &quot;stock_quantity&quot;: 400
-        }
-    ]
+    &quot;storeMovement&quot;: [],
+    &quot;bestSelling&quot;: [],
+    &quot;leastSelling&quot;: [],
+    &quot;lowStock&quot;: []
 }</code>
  </pre>
     </span>
@@ -625,7 +619,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-reports" data-method="GET"
       data-path="api/reports"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -653,6 +647,17 @@ access-control-allow-origin: *
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-reports"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -676,9 +681,143 @@ access-control-allow-origin: *
             </div>
                         </form>
 
+                    <h2 id="endpoints-GETapi-sales_report">GET api/sales_report</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-sales_report">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/sales_report" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/sales_report"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-sales_report">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 56
+access-control-allow-origin: *
+set-cookie: pos_session=y6ECrjJcIzPSqEn1gIvs9MEpIoTkx9oMZaoxMro9; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: []
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-sales_report" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-sales_report"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-sales_report" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-sales_report" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-sales_report"></code></pre>
+</span>
+<form id="form-GETapi-sales_report" data-method="GET"
+      data-path="api/sales_report"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-sales_report', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-sales_report"
+                    onclick="tryItOut('GETapi-sales_report');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-sales_report"
+                    onclick="cancelTryOut('GETapi-sales_report');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-sales_report" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/sales_report</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-sales_report"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="GETapi-sales_report"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="GETapi-sales_report"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
                     <h2 id="endpoints-GETapi-inventory">Display a listing of the resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -689,17 +828,19 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/inventory" \
+    --get "http://localhost:8000/api/inventory" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/inventory"
+    "http://localhost:8000/api/inventory"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -722,221 +863,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 57
+x-ratelimit-remaining: 55
 access-control-allow-origin: *
+set-cookie: pos_session=45DJ40A1f5DCOByGtkquD7gOG2EoCLIUgpKUtqwO; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 4,
-            &quot;barcode&quot;: &quot;5285000395164&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;0&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 08/01/2023&quot;,
-            &quot;cost&quot;: 23,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-15T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-31T10:12:22.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 5,
-            &quot;barcode&quot;: &quot;8212633832015&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;600&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2024&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 6,
-            &quot;barcode&quot;: &quot;12000052392&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;500&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 06/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 7,
-            &quot;barcode&quot;: &quot;6161106641055&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;400&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 15/10/2022&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 8,
-            &quot;barcode&quot;: &quot;6161106640560&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;600&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 08/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 9,
-            &quot;barcode&quot;: &quot;8212634901116&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;350&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 10,
-            &quot;barcode&quot;: &quot;6224007562109&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;650&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 01/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 11,
-            &quot;barcode&quot;: &quot;6161106640133&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;700&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2024&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 12,
-            &quot;barcode&quot;: &quot;6161106640430&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;600&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 13,
-            &quot;barcode&quot;: &quot;6161106640089&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;400&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 06/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 14,
-            &quot;barcode&quot;: &quot;6224001125010&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;300&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 15,
-            &quot;barcode&quot;: &quot;8210145612316&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;500&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 16,
-            &quot;barcode&quot;: &quot;6217000119951&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;250&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 06/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 17,
-            &quot;barcode&quot;: &quot;6161106641192&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;550&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 15/10/2022&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 18,
-            &quot;barcode&quot;: &quot;6297000851112&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;700&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2024&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        },
-        {
-            &quot;id&quot;: 19,
-            &quot;barcode&quot;: &quot;8210040356728&quot;,
-            &quot;item_name&quot;: null,
-            &quot;stock_quantity&quot;: &quot;400&quot;,
-            &quot;description&quot;: null,
-            &quot;expiration_date&quot;: &quot; 12/01/2023&quot;,
-            &quot;cost&quot;: null,
-            &quot;category&quot;: null,
-            &quot;price&quot;: null,
-            &quot;created_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-28T18:41:02.000000Z&quot;
-        }
-    ]
+    &quot;data&quot;: []
 }</code>
  </pre>
     </span>
@@ -952,7 +885,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-inventory" data-method="GET"
       data-path="api/inventory"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -980,6 +913,17 @@ access-control-allow-origin: *
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-inventory"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -1006,6 +950,7 @@ access-control-allow-origin: *
                     <h2 id="endpoints-POSTapi-inventory">Store a newly created resource in storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1016,39 +961,41 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/inventory" \
+    "http://localhost:8000/api/inventory" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"barcode\": \"ut\",
-    \"item_name\": \"c\",
-    \"stock_quantity\": 2,
-    \"expiration_date\": \"2023-01-02T14:44:57\",
-    \"cost\": 14818418.27999999932944774627685546875,
-    \"category\": 498,
-    \"price\": 9223810.09999999962747097015380859375
+    \"barcode\": \"ipsum\",
+    \"item_name\": \"fqayrkpuazhcvf\",
+    \"stock_quantity\": 20,
+    \"expiration_date\": \"2023-01-14T12:43:10\",
+    \"cost\": 2099.65299999999979263520799577236175537109375,
+    \"category\": \"dignissimos\",
+    \"price\": 6.76791543800000017228057913598604500293731689453125
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/inventory"
+    "http://localhost:8000/api/inventory"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "barcode": "ut",
-    "item_name": "c",
-    "stock_quantity": 2,
-    "expiration_date": "2023-01-02T14:44:57",
-    "cost": 14818418.27999999932944774627685546875,
-    "category": 498,
-    "price": 9223810.09999999962747097015380859375
+    "barcode": "ipsum",
+    "item_name": "fqayrkpuazhcvf",
+    "stock_quantity": 20,
+    "expiration_date": "2023-01-14T12:43:10",
+    "cost": 2099.65299999999979263520799577236175537109375,
+    "category": "dignissimos",
+    "price": 6.76791543800000017228057913598604500293731689453125
 };
 
 fetch(url, {
@@ -1060,7 +1007,38 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-inventory">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 54
+access-control-allow-origin: *
+set-cookie: pos_session=R7GWfYjnYJnjb3UELQx3uv8sGLmulKgRuO79ssCR; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;barcode&quot;: &quot;ipsum&quot;,
+        &quot;item_name&quot;: &quot;fqayrkpuazhcvf&quot;,
+        &quot;stock_quantity&quot;: 20,
+        &quot;expiration_date&quot;: &quot;2023-01-14T12:43:10&quot;,
+        &quot;cost&quot;: 2099.65299999999979263520799577236175537109375,
+        &quot;category&quot;: &quot;dignissimos&quot;,
+        &quot;price&quot;: 6.76791543800000017228057913598604500293731689453125,
+        &quot;user_id&quot;: 1,
+        &quot;updated_at&quot;: &quot;2023-01-14T12:43:10.000000Z&quot;,
+        &quot;created_at&quot;: &quot;2023-01-14T12:43:10.000000Z&quot;,
+        &quot;id&quot;: 1
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-inventory" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-inventory"></span>:
@@ -1073,7 +1051,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-inventory" data-method="POST"
       data-path="api/inventory"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1100,6 +1078,17 @@ fetch(url, {
             <b><code>api/inventory</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-inventory"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1129,10 +1118,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="barcode"                data-endpoint="POSTapi-inventory"
-               value="ut"
+               value="ipsum"
                data-component="body">
     <br>
-<p>Example: <code>ut</code></p>
+<p>Example: <code>ipsum</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>item_name</code></b>&nbsp;&nbsp;
@@ -1140,10 +1129,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="item_name"                data-endpoint="POSTapi-inventory"
-               value="c"
+               value="fqayrkpuazhcvf"
                data-component="body">
     <br>
-<p>Must not be greater than 256 characters. Example: <code>c</code></p>
+<p>Must not be greater than 256 characters. Example: <code>fqayrkpuazhcvf</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>stock_quantity</code></b>&nbsp;&nbsp;
@@ -1151,10 +1140,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="stock_quantity"                data-endpoint="POSTapi-inventory"
-               value="2"
+               value="20"
                data-component="body">
     <br>
-<p>Example: <code>2</code></p>
+<p>Example: <code>20</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -1173,10 +1162,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="expiration_date"                data-endpoint="POSTapi-inventory"
-               value="2023-01-02T14:44:57"
+               value="2023-01-14T12:43:10"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2023-01-02T14:44:57</code></p>
+<p>Must be a valid date. Example: <code>2023-01-14T12:43:10</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cost</code></b>&nbsp;&nbsp;
@@ -1184,21 +1173,21 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="cost"                data-endpoint="POSTapi-inventory"
-               value="14818418.28"
+               value="2099.653"
                data-component="body">
     <br>
-<p>Example: <code>14818418.28</code></p>
+<p>Example: <code>2099.653</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
-<small>number</small>&nbsp;
+<small>string</small>&nbsp;
  &nbsp;
-                <input type="number" style="display: none"
+                <input type="text" style="display: none"
                name="category"                data-endpoint="POSTapi-inventory"
-               value="498"
+               value="dignissimos"
                data-component="body">
     <br>
-<p>Example: <code>498</code></p>
+<p>Example: <code>dignissimos</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>price</code></b>&nbsp;&nbsp;
@@ -1206,16 +1195,17 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="price"                data-endpoint="POSTapi-inventory"
-               value="9223810.1"
+               value="6.767915438"
                data-component="body">
     <br>
-<p>Example: <code>9223810.1</code></p>
+<p>Example: <code>6.767915438</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-GETapi-inventory--id-">Display the specified resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1226,17 +1216,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/inventory/4" \
+    --get "http://localhost:8000/api/inventory/14" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/inventory/4"
+    "http://localhost:8000/api/inventory/14"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1250,7 +1242,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-inventory--id-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1259,24 +1251,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 56
+x-ratelimit-remaining: 53
 access-control-allow-origin: *
+set-cookie: pos_session=52Z8RTBqYPpvlHlEJMJTKMlBlJLeL4pV7MYmyYAx; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 4,
-        &quot;barcode&quot;: &quot;5285000395164&quot;,
-        &quot;item_name&quot;: null,
-        &quot;stock_quantity&quot;: &quot;0&quot;,
-        &quot;description&quot;: null,
-        &quot;expiration_date&quot;: &quot; 08/01/2023&quot;,
-        &quot;cost&quot;: 23,
-        &quot;category&quot;: null,
-        &quot;price&quot;: null,
-        &quot;created_at&quot;: &quot;2022-12-15T18:41:02.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2022-12-31T10:12:22.000000Z&quot;
-    }
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Inventory] 14&quot;
 }</code>
  </pre>
     </span>
@@ -1292,7 +1273,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-inventory--id-" data-method="GET"
       data-path="api/inventory/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1319,6 +1300,17 @@ access-control-allow-origin: *
             <b><code>api/inventory/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-inventory--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1348,16 +1340,17 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="GETapi-inventory--id-"
-               value="4"
+               value="14"
                data-component="url">
     <br>
-<p>The ID of the inventory. Example: <code>4</code></p>
+<p>The ID of the inventory. Example: <code>14</code></p>
             </div>
                     </form>
 
                     <h2 id="endpoints-PUTapi-inventory--id-">Update the specified resource in storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1368,39 +1361,41 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/inventory/4" \
+    "http://localhost:8000/api/inventory/1" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"barcode\": \"vel\",
-    \"item_name\": \"kudjg\",
-    \"stock_quantity\": 20,
-    \"expiration_date\": \"2023-01-02T14:44:57\",
-    \"cost\": 323.1568311199999925520387478172779083251953125,
-    \"category\": 730092.538361800019629299640655517578125,
-    \"price\": 43173881.016246266663074493408203125
+    \"barcode\": \"qui\",
+    \"item_name\": \"wtuqboxctqwzlcabfwdzjuc\",
+    \"stock_quantity\": 9,
+    \"expiration_date\": \"2023-01-14T12:43:10\",
+    \"cost\": 35.56000000000000227373675443232059478759765625,
+    \"category\": 7.18932400000000004780531526193954050540924072265625,
+    \"price\": 1713.799999999999954525264911353588104248046875
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/inventory/4"
+    "http://localhost:8000/api/inventory/1"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "barcode": "vel",
-    "item_name": "kudjg",
-    "stock_quantity": 20,
-    "expiration_date": "2023-01-02T14:44:57",
-    "cost": 323.1568311199999925520387478172779083251953125,
-    "category": 730092.538361800019629299640655517578125,
-    "price": 43173881.016246266663074493408203125
+    "barcode": "qui",
+    "item_name": "wtuqboxctqwzlcabfwdzjuc",
+    "stock_quantity": 9,
+    "expiration_date": "2023-01-14T12:43:10",
+    "cost": 35.56000000000000227373675443232059478759765625,
+    "category": 7.18932400000000004780531526193954050540924072265625,
+    "price": 1713.799999999999954525264911353588104248046875
 };
 
 fetch(url, {
@@ -1412,7 +1407,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-inventory--id-">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 52
+access-control-allow-origin: *
+set-cookie: pos_session=yTcnRb4UA6AoiBzFFkzrL3S8ApqSV5QLCDfGp3Th; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Inventory] 1&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-inventory--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-inventory--id-"></span>:
@@ -1425,7 +1439,7 @@ fetch(url, {
 </span>
 <form id="form-PUTapi-inventory--id-" data-method="PUT"
       data-path="api/inventory/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1457,6 +1471,17 @@ fetch(url, {
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="PUTapi-inventory--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -1485,10 +1510,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="PUTapi-inventory--id-"
-               value="4"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the inventory. Example: <code>4</code></p>
+<p>The ID of the inventory. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -1497,10 +1522,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="barcode"                data-endpoint="PUTapi-inventory--id-"
-               value="vel"
+               value="qui"
                data-component="body">
     <br>
-<p>Example: <code>vel</code></p>
+<p>Example: <code>qui</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>item_name</code></b>&nbsp;&nbsp;
@@ -1508,10 +1533,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="item_name"                data-endpoint="PUTapi-inventory--id-"
-               value="kudjg"
+               value="wtuqboxctqwzlcabfwdzjuc"
                data-component="body">
     <br>
-<p>Must not be greater than 256 characters. Example: <code>kudjg</code></p>
+<p>Must not be greater than 256 characters. Example: <code>wtuqboxctqwzlcabfwdzjuc</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>stock_quantity</code></b>&nbsp;&nbsp;
@@ -1519,10 +1544,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                name="stock_quantity"                data-endpoint="PUTapi-inventory--id-"
-               value="20"
+               value="9"
                data-component="body">
     <br>
-<p>Example: <code>20</code></p>
+<p>Example: <code>9</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -1541,10 +1566,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="expiration_date"                data-endpoint="PUTapi-inventory--id-"
-               value="2023-01-02T14:44:57"
+               value="2023-01-14T12:43:10"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2023-01-02T14:44:57</code></p>
+<p>Must be a valid date. Example: <code>2023-01-14T12:43:10</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cost</code></b>&nbsp;&nbsp;
@@ -1552,10 +1577,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                name="cost"                data-endpoint="PUTapi-inventory--id-"
-               value="323.15683112"
+               value="35.56"
                data-component="body">
     <br>
-<p>Example: <code>323.15683112</code></p>
+<p>Example: <code>35.56</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
@@ -1563,10 +1588,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                name="category"                data-endpoint="PUTapi-inventory--id-"
-               value="730092.5383618"
+               value="7.189324"
                data-component="body">
     <br>
-<p>Example: <code>730092.5383618</code></p>
+<p>Example: <code>7.189324</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>price</code></b>&nbsp;&nbsp;
@@ -1574,16 +1599,17 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                name="price"                data-endpoint="PUTapi-inventory--id-"
-               value="43173881.016246"
+               value="1713.8"
                data-component="body">
     <br>
-<p>Example: <code>43173881.016246</code></p>
+<p>Example: <code>1713.8</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-DELETEapi-inventory--id-">Remove the specified resource from storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1594,17 +1620,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/inventory/4" \
+    "http://localhost:8000/api/inventory/3" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/inventory/4"
+    "http://localhost:8000/api/inventory/3"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1617,7 +1645,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-inventory--id-">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 51
+access-control-allow-origin: *
+set-cookie: pos_session=5CeOjZWb0euRBHwQiic3rBqPaFRjJlIOT7EX294T; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Inventory] 3&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-inventory--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-inventory--id-"></span>:
@@ -1630,7 +1677,7 @@ fetch(url, {
 </span>
 <form id="form-DELETEapi-inventory--id-" data-method="DELETE"
       data-path="api/inventory/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1657,6 +1704,17 @@ fetch(url, {
             <b><code>api/inventory/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="DELETEapi-inventory--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1686,16 +1744,17 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="DELETEapi-inventory--id-"
-               value="4"
+               value="3"
                data-component="url">
     <br>
-<p>The ID of the inventory. Example: <code>4</code></p>
+<p>The ID of the inventory. Example: <code>3</code></p>
             </div>
                     </form>
 
                     <h2 id="endpoints-GETapi-suppliers">Display a listing of the resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1706,17 +1765,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/suppliers" \
+    --get "http://localhost:8000/api/suppliers" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/suppliers"
+    "http://localhost:8000/api/suppliers"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1739,20 +1800,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 55
+x-ratelimit-remaining: 50
 access-control-allow-origin: *
+set-cookie: pos_session=igBN8D0gBxv5R1bdzlpKHXXfeF6cU1tci5EQ7SZm; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;sdsd&quot;,
-            &quot;phone&quot;: 123,
-            &quot;created_at&quot;: &quot;2022-12-31T10:15:57.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2022-12-31T10:15:57.000000Z&quot;
-        }
-    ]
+    &quot;data&quot;: []
 }</code>
  </pre>
     </span>
@@ -1768,7 +1822,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-suppliers" data-method="GET"
       data-path="api/suppliers"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1796,6 +1850,17 @@ access-control-allow-origin: *
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-suppliers"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -1822,6 +1887,7 @@ access-control-allow-origin: *
                     <h2 id="endpoints-POSTapi-suppliers">Store a newly created resource in storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1832,29 +1898,31 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/suppliers" \
+    "http://localhost:8000/api/suppliers" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"name\": \"windayn\",
-    \"phone\": 1
+    \"name\": \"obpxrnpxjdaegqrovkflaca\",
+    \"phone\": \"quaerat\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/suppliers"
+    "http://localhost:8000/api/suppliers"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "name": "windayn",
-    "phone": 1
+    "name": "obpxrnpxjdaegqrovkflaca",
+    "phone": "quaerat"
 };
 
 fetch(url, {
@@ -1866,7 +1934,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-suppliers">
-</span>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 49
+access-control-allow-origin: *
+set-cookie: pos_session=lhAbRQjIULt1lMmIPIpSYc3HoU07nQJRlKjXrN1Y; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Server Error&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-suppliers" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-suppliers"></span>:
@@ -1879,7 +1966,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-suppliers" data-method="POST"
       data-path="api/suppliers"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1906,6 +1993,17 @@ fetch(url, {
             <b><code>api/suppliers</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-suppliers"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1935,27 +2033,28 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="POSTapi-suppliers"
-               value="windayn"
+               value="obpxrnpxjdaegqrovkflaca"
                data-component="body">
     <br>
-<p>Must not be greater than 256 characters. Example: <code>windayn</code></p>
+<p>Must not be greater than 256 characters. Example: <code>obpxrnpxjdaegqrovkflaca</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
+<small>string</small>&nbsp;
  &nbsp;
-                <input type="number" style="display: none"
+                <input type="text" style="display: none"
                name="phone"                data-endpoint="POSTapi-suppliers"
-               value="1"
+               value="quaerat"
                data-component="body">
     <br>
-<p>Example: <code>1</code></p>
+<p>Example: <code>quaerat</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-GETapi-suppliers--id-">Display the specified resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1966,17 +2065,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/suppliers/1" \
+    --get "http://localhost:8000/api/suppliers/7" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/suppliers/1"
+    "http://localhost:8000/api/suppliers/7"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1990,7 +2091,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-suppliers--id-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1999,39 +2100,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 54
+x-ratelimit-remaining: 48
 access-control-allow-origin: *
+set-cookie: pos_session=5IZAAKvo6qrCW6nsSzJW408QCNlbKF29i8GWyuMZ; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;name&quot;: &quot;sdsd&quot;,
-        &quot;phone&quot;: 123,
-        &quot;created_at&quot;: &quot;2022-12-31T10:15:57.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2022-12-31T10:15:57.000000Z&quot;,
-        &quot;invoices&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;barcode&quot;: &quot;5285000395164&quot;,
-                &quot;item_name&quot;: &quot; Indomie Vegetable Flavor 70g&quot;,
-                &quot;category&quot;: &quot;Ingredient&quot;,
-                &quot;description&quot;: &quot;Pastas&quot;,
-                &quot;product_life_in_days&quot;: 240,
-                &quot;size&quot;: &quot;70&quot;,
-                &quot;unit_of_measure&quot;: &quot;g&quot;,
-                &quot;measurement_class&quot;: &quot;mass&quot;,
-                &quot;seasonality&quot;: null,
-                &quot;cost&quot;: 108.3299999999999982946974341757595539093017578125,
-                &quot;price&quot;: 130,
-                &quot;min_price&quot;: 40,
-                &quot;max_price&quot;: 170,
-                &quot;created_at&quot;: &quot;2022-12-28T18:59:37.000000Z&quot;,
-                &quot;updated_at&quot;: &quot;2022-12-28T18:59:37.000000Z&quot;,
-                &quot;supplier_id&quot;: 1
-            }
-        ]
-    }
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Supplier] 7&quot;
 }</code>
  </pre>
     </span>
@@ -2047,7 +2122,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-suppliers--id-" data-method="GET"
       data-path="api/suppliers/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2074,6 +2149,17 @@ access-control-allow-origin: *
             <b><code>api/suppliers/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-suppliers--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2103,16 +2189,17 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="GETapi-suppliers--id-"
-               value="1"
+               value="7"
                data-component="url">
     <br>
-<p>The ID of the supplier. Example: <code>1</code></p>
+<p>The ID of the supplier. Example: <code>7</code></p>
             </div>
                     </form>
 
                     <h2 id="endpoints-PUTapi-suppliers--id-">Update the specified resource in storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2123,29 +2210,31 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/suppliers/1" \
+    "http://localhost:8000/api/suppliers/8" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"name\": \"gobvj\",
-    \"phone\": 11
+    \"name\": \"hlf\",
+    \"phone\": \"accusantium\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/suppliers/1"
+    "http://localhost:8000/api/suppliers/8"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "name": "gobvj",
-    "phone": 11
+    "name": "hlf",
+    "phone": "accusantium"
 };
 
 fetch(url, {
@@ -2157,7 +2246,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-suppliers--id-">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 47
+access-control-allow-origin: *
+set-cookie: pos_session=orbYexlwd7Sl9PJAvrq4OgRh1EG8cGpTO5QXrnGR; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Supplier] 8&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-suppliers--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-suppliers--id-"></span>:
@@ -2170,7 +2278,7 @@ fetch(url, {
 </span>
 <form id="form-PUTapi-suppliers--id-" data-method="PUT"
       data-path="api/suppliers/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2202,6 +2310,17 @@ fetch(url, {
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="PUTapi-suppliers--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -2230,10 +2349,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="PUTapi-suppliers--id-"
-               value="1"
+               value="8"
                data-component="url">
     <br>
-<p>The ID of the supplier. Example: <code>1</code></p>
+<p>The ID of the supplier. Example: <code>8</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2242,27 +2361,28 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="PUTapi-suppliers--id-"
-               value="gobvj"
+               value="hlf"
                data-component="body">
     <br>
-<p>Must not be greater than 256 characters. Example: <code>gobvj</code></p>
+<p>Must not be greater than 256 characters. Example: <code>hlf</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
+<small>string</small>&nbsp;
  &nbsp;
-                <input type="number" style="display: none"
+                <input type="text" style="display: none"
                name="phone"                data-endpoint="PUTapi-suppliers--id-"
-               value="11"
+               value="accusantium"
                data-component="body">
     <br>
-<p>Example: <code>11</code></p>
+<p>Example: <code>accusantium</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-DELETEapi-suppliers--id-">Remove the specified resource from storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2273,17 +2393,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/suppliers/1" \
+    "http://localhost:8000/api/suppliers/4" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/suppliers/1"
+    "http://localhost:8000/api/suppliers/4"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2296,7 +2418,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-suppliers--id-">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 46
+access-control-allow-origin: *
+set-cookie: pos_session=6skzFl2t5748mdbw8YwK3AdsomqLXmdAhpEXjOgD; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Supplier] 4&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-suppliers--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-suppliers--id-"></span>:
@@ -2309,7 +2450,7 @@ fetch(url, {
 </span>
 <form id="form-DELETEapi-suppliers--id-" data-method="DELETE"
       data-path="api/suppliers/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2336,6 +2477,17 @@ fetch(url, {
             <b><code>api/suppliers/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="DELETEapi-suppliers--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2365,16 +2517,186 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="DELETEapi-suppliers--id-"
-               value="1"
+               value="4"
                data-component="url">
     <br>
-<p>The ID of the supplier. Example: <code>1</code></p>
+<p>The ID of the supplier. Example: <code>4</code></p>
             </div>
                     </form>
+
+                    <h2 id="endpoints-POSTapi-change_manager_password">POST api/change_manager_password</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-change_manager_password">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/change_manager_password" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"password\": \"K\\\"JLd&gt;?m\\\"{43{YIHUwwS\",
+    \"new_password\": \"tlanphkwuxjijxkvsghvklerjtzzuxsfjfloeaqxwuorqrsjgom\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/change_manager_password"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "password": "K\"JLd&gt;?m\"{43{YIHUwwS",
+    "new_password": "tlanphkwuxjijxkvsghvklerjtzzuxsfjfloeaqxwuorqrsjgom"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-change_manager_password">
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 45
+access-control-allow-origin: *
+set-cookie: pos_session=g7ejdedK4kxf9kQ3PkZlP5aPmMYxEGxCOz0FVVaN; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: [
+        &quot;The password is incorrect.&quot;
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-change_manager_password" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-change_manager_password"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-change_manager_password" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-change_manager_password" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-change_manager_password"></code></pre>
+</span>
+<form id="form-POSTapi-change_manager_password" data-method="POST"
+      data-path="api/change_manager_password"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-change_manager_password', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-change_manager_password"
+                    onclick="tryItOut('POSTapi-change_manager_password');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-change_manager_password"
+                    onclick="cancelTryOut('POSTapi-change_manager_password');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-change_manager_password" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/change_manager_password</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-change_manager_password"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Content-Type"                data-endpoint="POSTapi-change_manager_password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Accept"                data-endpoint="POSTapi-change_manager_password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="password"                data-endpoint="POSTapi-change_manager_password"
+               value="K"JLd>?m"{43{YIHUwwS"
+               data-component="body">
+    <br>
+<p>Must be at least 8 characters. Example: <code>K"JLd&gt;?m"{43{YIHUwwS</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>new_password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="new_password"                data-endpoint="POSTapi-change_manager_password"
+               value="tlanphkwuxjijxkvsghvklerjtzzuxsfjfloeaqxwuorqrsjgom"
+               data-component="body">
+    <br>
+<p>Must be at least 8 characters. Example: <code>tlanphkwuxjijxkvsghvklerjtzzuxsfjfloeaqxwuorqrsjgom</code></p>
+        </div>
+        </form>
 
                     <h2 id="endpoints-GETapi-sales">Display a listing of the resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2385,17 +2707,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/sales" \
+    --get "http://localhost:8000/api/sales" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/sales"
+    "http://localhost:8000/api/sales"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2418,8 +2742,9 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 53
+x-ratelimit-remaining: 44
 access-control-allow-origin: *
+set-cookie: pos_session=ozETfOGUr3tauAJRcoguVYoZ8V53CdbKsnsE6xtK; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;"></code>
@@ -2437,7 +2762,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-sales" data-method="GET"
       data-path="api/sales"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2465,6 +2790,17 @@ access-control-allow-origin: *
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-sales"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -2491,6 +2827,7 @@ access-control-allow-origin: *
                     <h2 id="endpoints-POSTapi-sales">Store a newly created resource in storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2501,14 +2838,15 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/sales" \
+    "http://localhost:8000/api/sales" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"products\": [
         {
-            \"id\": \"corrupti\",
-            \"quantity\": 16
+            \"id\": \"ipsum\",
+            \"quantity\": 9
         }
     ]
 }"
@@ -2517,10 +2855,11 @@ access-control-allow-origin: *
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/sales"
+    "http://localhost:8000/api/sales"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2528,8 +2867,8 @@ const headers = {
 let body = {
     "products": [
         {
-            "id": "corrupti",
-            "quantity": 16
+            "id": "ipsum",
+            "quantity": 9
         }
     ]
 };
@@ -2543,7 +2882,31 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-sales">
-</span>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 43
+access-control-allow-origin: *
+set-cookie: pos_session=SMLavTgGBsGoMj07csz2gmHgTUPvbQcTvDBLVwl9; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The selected products.0.id is invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;products.0.id&quot;: [
+            &quot;The selected products.0.id is invalid.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-sales" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-sales"></span>:
@@ -2556,7 +2919,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-sales" data-method="POST"
       data-path="api/sales"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2583,6 +2946,17 @@ fetch(url, {
             <b><code>api/sales</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-sales"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2632,10 +3006,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="products.0.id"                data-endpoint="POSTapi-sales"
-               value="corrupti"
+               value="ipsum"
                data-component="body">
     <br>
-<p>Example: <code>corrupti</code></p>
+<p>Example: <code>ipsum</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
@@ -2643,10 +3017,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="products.0.quantity"                data-endpoint="POSTapi-sales"
-               value="16"
+               value="9"
                data-component="body">
     <br>
-<p>Example: <code>16</code></p>
+<p>Example: <code>9</code></p>
                     </div>
                                     </details>
         </div>
@@ -2655,6 +3029,7 @@ fetch(url, {
                     <h2 id="endpoints-GETapi-sales--id-">Display the specified resource.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2665,17 +3040,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/sales/1" \
+    --get "http://localhost:8000/api/sales/6" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/sales/1"
+    "http://localhost:8000/api/sales/6"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2689,20 +3066,23 @@ fetch(url, {
 
 <span id="example-responses-GETapi-sales--id-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">content-type: text/html; charset=UTF-8
-cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 52
+x-ratelimit-remaining: 42
 access-control-allow-origin: *
+set-cookie: pos_session=3mrp7tYMYXyHH6Fu3H2Zi6NrjzS0YV0T9Z3biYpK; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
  </code></pre></details>         <pre>
 
-<code class="language-json" style="max-height: 300px;"></code>
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Sale] 6&quot;
+}</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-sales--id-" hidden>
@@ -2717,7 +3097,7 @@ access-control-allow-origin: *
 </span>
 <form id="form-GETapi-sales--id-" data-method="GET"
       data-path="api/sales/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2744,6 +3124,17 @@ access-control-allow-origin: *
             <b><code>api/sales/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="GETapi-sales--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2773,16 +3164,17 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="GETapi-sales--id-"
-               value="1"
+               value="6"
                data-component="url">
     <br>
-<p>The ID of the sale. Example: <code>1</code></p>
+<p>The ID of the sale. Example: <code>6</code></p>
             </div>
                     </form>
 
                     <h2 id="endpoints-PUTapi-sales--id-">Update the specified resource in storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2793,17 +3185,19 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/sales/1" \
+    "http://localhost:8000/api/sales/4" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/sales/1"
+    "http://localhost:8000/api/sales/4"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2816,7 +3210,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-sales--id-">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 41
+access-control-allow-origin: *
+set-cookie: pos_session=PnxyROZglsvxJWzl03oDKQRpKQWFi9DJbeVXVpM8; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Sale] 4&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-sales--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-sales--id-"></span>:
@@ -2829,7 +3242,7 @@ fetch(url, {
 </span>
 <form id="form-PUTapi-sales--id-" data-method="PUT"
       data-path="api/sales/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2861,6 +3274,17 @@ fetch(url, {
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="PUTapi-sales--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -2889,16 +3313,17 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="PUTapi-sales--id-"
-               value="1"
+               value="4"
                data-component="url">
     <br>
-<p>The ID of the sale. Example: <code>1</code></p>
+<p>The ID of the sale. Example: <code>4</code></p>
             </div>
                     </form>
 
                     <h2 id="endpoints-DELETEapi-sales--id-">Remove the specified resource from storage.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2909,17 +3334,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/sales/1" \
+    "http://localhost:8000/api/sales/5" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/sales/1"
+    "http://localhost:8000/api/sales/5"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2932,7 +3359,26 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-sales--id-">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 40
+access-control-allow-origin: *
+set-cookie: pos_session=POfqxk8wAZuRz3boJxRUxVnVzuXyouFLRmu9NtNU; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7199; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Sale] 5&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-sales--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-sales--id-"></span>:
@@ -2945,7 +3391,7 @@ fetch(url, {
 </span>
 <form id="form-DELETEapi-sales--id-" data-method="DELETE"
       data-path="api/sales/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2972,6 +3418,17 @@ fetch(url, {
             <b><code>api/sales/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="DELETEapi-sales--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3001,16 +3458,17 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="id"                data-endpoint="DELETEapi-sales--id-"
-               value="1"
+               value="5"
                data-component="url">
     <br>
-<p>The ID of the sale. Example: <code>1</code></p>
+<p>The ID of the sale. Example: <code>5</code></p>
             </div>
                     </form>
 
                     <h2 id="endpoints-POSTapi-login_manager">POST api/login_manager</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -3021,27 +3479,29 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/login_manager" \
+    "http://localhost:8000/api/login_manager" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"password\": \"ivF=9iF+_u07HZ?C\"
+    \"manager_password\": \"quas\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/login_manager"
+    "http://localhost:8000/api/login_manager"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "password": "ivF=9iF+_u07HZ?C"
+    "manager_password": "quas"
 };
 
 fetch(url, {
@@ -3053,7 +3513,28 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-login_manager">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 39
+access-control-allow-origin: *
+set-cookie: pos_session=uJ1nXotRrNRQ675H02Nw2K1DdhINBfVTxzhq5Lxc; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: [
+        &quot;These credentials do not match our records.&quot;
+    ]
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-login_manager" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-login_manager"></span>:
@@ -3066,7 +3547,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-login_manager" data-method="POST"
       data-path="api/login_manager"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3094,6 +3575,17 @@ fetch(url, {
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-login_manager"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -3117,21 +3609,22 @@ fetch(url, {
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>manager_password</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-               name="password"                data-endpoint="POSTapi-login_manager"
-               value="ivF=9iF+_u07HZ?C"
+               name="manager_password"                data-endpoint="POSTapi-login_manager"
+               value="quas"
                data-component="body">
     <br>
-<p>Example: <code>ivF=9iF+_u07HZ?C</code></p>
+<p>Example: <code>quas</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-POSTapi-change_password">POST api/change_password</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -3142,29 +3635,31 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/change_password" \
+    "http://localhost:8000/api/change_password" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"password\": \"g&lt;Dp74$f}Uv+a?*Ke\",
-    \"new_password\": \"nopxhwqpozroqgbmlbmxdxhecdpnkrluwlfayijepphoajhyfojnsvyztiwcghwzabunuhtvnlrxeblalpeqh\"
+    \"password\": \"`HNMnif\",
+    \"new_password\": \"etyvgjoiazvguifxiugdqznijifmaktbpgylckjebeixoetxodedwjoyhgphfwrksqlfhiuzqontejdxwtumskj\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/change_password"
+    "http://localhost:8000/api/change_password"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "password": "g&lt;Dp74$f}Uv+a?*Ke",
-    "new_password": "nopxhwqpozroqgbmlbmxdxhecdpnkrluwlfayijepphoajhyfojnsvyztiwcghwzabunuhtvnlrxeblalpeqh"
+    "password": "`HNMnif",
+    "new_password": "etyvgjoiazvguifxiugdqznijifmaktbpgylckjebeixoetxodedwjoyhgphfwrksqlfhiuzqontejdxwtumskj"
 };
 
 fetch(url, {
@@ -3176,7 +3671,31 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-change_password">
-</span>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 38
+access-control-allow-origin: *
+set-cookie: pos_session=qj5wbsTeaooaEjnb8CVnZ511qqNAsmQoAKwVx8YK; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The password must be at least 8 characters.&quot;,
+    &quot;errors&quot;: {
+        &quot;password&quot;: [
+            &quot;The password must be at least 8 characters.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-change_password" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-change_password"></span>:
@@ -3189,7 +3708,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-change_password" data-method="POST"
       data-path="api/change_password"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3216,6 +3735,17 @@ fetch(url, {
             <b><code>api/change_password</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-change_password"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3245,10 +3775,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="POSTapi-change_password"
-               value="g<Dp74$f}Uv+a?*Ke"
+               value="`HNMnif"
                data-component="body">
     <br>
-<p>Must be at least 8 characters. Example: <code>g&lt;Dp74$f}Uv+a?*Ke</code></p>
+<p>Must be at least 8 characters. Example: <code>`HNMnif</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>new_password</code></b>&nbsp;&nbsp;
@@ -3256,106 +3786,128 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="new_password"                data-endpoint="POSTapi-change_password"
-               value="nopxhwqpozroqgbmlbmxdxhecdpnkrluwlfayijepphoajhyfojnsvyztiwcghwzabunuhtvnlrxeblalpeqh"
+               value="etyvgjoiazvguifxiugdqznijifmaktbpgylckjebeixoetxodedwjoyhgphfwrksqlfhiuzqontejdxwtumskj"
                data-component="body">
     <br>
-<p>Must be at least 8 characters. Example: <code>nopxhwqpozroqgbmlbmxdxhecdpnkrluwlfayijepphoajhyfojnsvyztiwcghwzabunuhtvnlrxeblalpeqh</code></p>
+<p>Must be at least 8 characters. Example: <code>etyvgjoiazvguifxiugdqznijifmaktbpgylckjebeixoetxodedwjoyhgphfwrksqlfhiuzqontejdxwtumskj</code></p>
         </div>
         </form>
 
-                    <h2 id="endpoints-POSTapi-change_manager_password">POST api/change_manager_password</h2>
+                    <h2 id="endpoints-POSTapi-logout">POST api/logout</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
 
-<span id="example-requests-POSTapi-change_manager_password">
+<span id="example-requests-POSTapi-logout">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/change_manager_password" \
+    "http://localhost:8000/api/logout" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"password\": \"}}&gt;:eT!*#ul?C~:n*N\",
-    \"new_password\": \"olvtjgibhaugdtahcpllhefou\"
-}"
-</code></pre></div>
+    --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/change_manager_password"
+    "http://localhost:8000/api/logout"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
-};
-
-let body = {
-    "password": "}}&gt;:eT!*#ul?C~:n*N",
-    "new_password": "olvtjgibhaugdtahcpllhefou"
 };
 
 fetch(url, {
     method: "POST",
     headers,
-    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTapi-change_manager_password">
-</span>
-<span id="execution-results-POSTapi-change_manager_password" hidden>
+<span id="example-responses-POSTapi-logout">
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 37
+access-control-allow-origin: *
+set-cookie: pos_session=E7zb1SwVt3iJPVlFEzqtYNjeLyKARiGG2Wj7Mvou; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Server Error&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-logout" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-change_manager_password"></span>:
+                id="execution-response-status-POSTapi-logout"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-change_manager_password" style="max-height: 400px;"></code></pre>
+    <pre class="json"><code id="execution-response-content-POSTapi-logout" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-change_manager_password" hidden>
+<span id="execution-error-POSTapi-logout" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-change_manager_password"></code></pre>
+    <pre><code id="execution-error-message-POSTapi-logout"></code></pre>
 </span>
-<form id="form-POSTapi-change_manager_password" data-method="POST"
-      data-path="api/change_manager_password"
-      data-authed="0"
+<form id="form-POSTapi-logout" data-method="POST"
+      data-path="api/logout"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-change_manager_password', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-logout', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-change_manager_password"
-                    onclick="tryItOut('POSTapi-change_manager_password');">Try it out ⚡
+                    id="btn-tryout-POSTapi-logout"
+                    onclick="tryItOut('POSTapi-logout');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-change_manager_password"
-                    onclick="cancelTryOut('POSTapi-change_manager_password');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-logout"
+                    onclick="cancelTryOut('POSTapi-logout');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-change_manager_password" hidden>Send Request 💥
+                    id="btn-executetryout-POSTapi-logout" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/change_manager_password</code></b>
+            <b><code>api/logout</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-logout"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-               name="Content-Type"                data-endpoint="POSTapi-change_manager_password"
+               name="Content-Type"                data-endpoint="POSTapi-logout"
                value="application/json"
                data-component="header">
     <br>
@@ -3366,40 +3918,18 @@ fetch(url, {
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-               name="Accept"                data-endpoint="POSTapi-change_manager_password"
+               name="Accept"                data-endpoint="POSTapi-logout"
                value="application/json"
                data-component="header">
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-               name="password"                data-endpoint="POSTapi-change_manager_password"
-               value="}}>:eT!*#ul?C~:n*N"
-               data-component="body">
-    <br>
-<p>Must be at least 8 characters. Example: <code>}}&gt;:eT!*#ul?C~:n*N</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>new_password</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-               name="new_password"                data-endpoint="POSTapi-change_manager_password"
-               value="olvtjgibhaugdtahcpllhefou"
-               data-component="body">
-    <br>
-<p>Must be at least 8 characters. Example: <code>olvtjgibhaugdtahcpllhefou</code></p>
-        </div>
-        </form>
+                        </form>
 
                     <h2 id="endpoints-POSTapi-login">POST api/login</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -3410,29 +3940,31 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/login" \
+    "http://localhost:8000/api/login" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"delmer.damore@example.org\",
-    \"password\": \"_TfU7WNT\"
+    \"email\": \"wolf.jada@example.net\",
+    \"password\": \"kRj-:5=Lk\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/login"
+    "http://localhost:8000/api/login"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "email": "delmer.damore@example.org",
-    "password": "_TfU7WNT"
+    "email": "wolf.jada@example.net",
+    "password": "kRj-:5=Lk"
 };
 
 fetch(url, {
@@ -3444,7 +3976,28 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-login">
-</span>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 36
+access-control-allow-origin: *
+set-cookie: pos_session=fjzX6LgLVWtSbMr7Fac11k6AZGMniClzhOXQVo50; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: [
+        &quot;These credentials do not match our records.&quot;
+    ]
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-login" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-login"></span>:
@@ -3457,7 +4010,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-login" data-method="POST"
       data-path="api/login"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3484,6 +4037,17 @@ fetch(url, {
             <b><code>api/login</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-login"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3513,10 +4077,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="email"                data-endpoint="POSTapi-login"
-               value="delmer.damore@example.org"
+               value="wolf.jada@example.net"
                data-component="body">
     <br>
-<p>Must be a valid email address. Example: <code>delmer.damore@example.org</code></p>
+<p>Must be a valid email address. Example: <code>wolf.jada@example.net</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -3524,16 +4088,17 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="POSTapi-login"
-               value="_TfU7WNT"
+               value="kRj-:5=Lk"
                data-component="body">
     <br>
-<p>Example: <code>_TfU7WNT</code></p>
+<p>Example: <code>kRj-:5=Lk</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-POSTapi-register">POST api/register</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -3544,33 +4109,35 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/register" \
+    "http://localhost:8000/api/register" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"jamison61@example.org\",
-    \"name\": \"wyq\",
-    \"password\": \"BuD4mzp\',E(wI-S,\",
-    \"manager_password\": \"hsyqrgkkvlrkxwltwglwjlgnmwpxsartdgjxrjbhcmlpaicxrvfibdtjfhnuubgnuuddtxtmfblrserwaeazw\"
+    \"email\": \"emann@example.org\",
+    \"name\": \"defpectuartlffmglyj\",
+    \"password\": \"3)L-=;Ryrnil\\\"%^w\",
+    \"manager_password\": \"ylzyyogvusjqajxqxglszwrlegtwekqhzp\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/register"
+    "http://localhost:8000/api/register"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "email": "jamison61@example.org",
-    "name": "wyq",
-    "password": "BuD4mzp',E(wI-S,",
-    "manager_password": "hsyqrgkkvlrkxwltwglwjlgnmwpxsartdgjxrjbhcmlpaicxrvfibdtjfhnuubgnuuddtxtmfblrserwaeazw"
+    "email": "emann@example.org",
+    "name": "defpectuartlffmglyj",
+    "password": "3)L-=;Ryrnil\"%^w",
+    "manager_password": "ylzyyogvusjqajxqxglszwrlegtwekqhzp"
 };
 
 fetch(url, {
@@ -3582,7 +4149,34 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-register">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 35
+access-control-allow-origin: *
+set-cookie: pos_session=gE0oLOPgCroARnBhVx7ycubJPUd4NCgrUIPOlBLB; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;user&quot;: {
+        &quot;email&quot;: &quot;emann@example.org&quot;,
+        &quot;name&quot;: &quot;defpectuartlffmglyj&quot;,
+        &quot;type&quot;: 1,
+        &quot;updated_at&quot;: &quot;2023-01-14T12:43:11.000000Z&quot;,
+        &quot;created_at&quot;: &quot;2023-01-14T12:43:11.000000Z&quot;,
+        &quot;id&quot;: 8
+    },
+    &quot;token&quot;: &quot;12|rz8oJS4qkzVBpvb02ErqlAUa1YGZ8MBDLpWjVxNH&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-register" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-register"></span>:
@@ -3595,7 +4189,7 @@ fetch(url, {
 </span>
 <form id="form-POSTapi-register" data-method="POST"
       data-path="api/register"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3622,6 +4216,17 @@ fetch(url, {
             <b><code>api/register</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+               name="Authorization" class="auth-value"               data-endpoint="POSTapi-register"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3651,10 +4256,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="email"                data-endpoint="POSTapi-register"
-               value="jamison61@example.org"
+               value="emann@example.org"
                data-component="body">
     <br>
-<p>Must be a valid email address. Example: <code>jamison61@example.org</code></p>
+<p>Must be a valid email address. Example: <code>emann@example.org</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
@@ -3662,10 +4267,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="POSTapi-register"
-               value="wyq"
+               value="defpectuartlffmglyj"
                data-component="body">
     <br>
-<p>Must not be greater than 256 characters. Example: <code>wyq</code></p>
+<p>Must not be greater than 256 characters. Example: <code>defpectuartlffmglyj</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -3673,10 +4278,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="POSTapi-register"
-               value="BuD4mzp',E(wI-S,"
+               value="3)L-=;Ryrnil"%^w"
                data-component="body">
     <br>
-<p>Must be at least 8 characters. Example: <code>BuD4mzp',E(wI-S,</code></p>
+<p>Must be at least 8 characters. Example: <code>3)L-=;Ryrnil"%^w</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>manager_password</code></b>&nbsp;&nbsp;
@@ -3684,10 +4289,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="manager_password"                data-endpoint="POSTapi-register"
-               value="hsyqrgkkvlrkxwltwglwjlgnmwpxsartdgjxrjbhcmlpaicxrvfibdtjfhnuubgnuuddtxtmfblrserwaeazw"
+               value="ylzyyogvusjqajxqxglszwrlegtwekqhzp"
                data-component="body">
     <br>
-<p>Must be at least 8 characters. Example: <code>hsyqrgkkvlrkxwltwglwjlgnmwpxsartdgjxrjbhcmlpaicxrvfibdtjfhnuubgnuuddtxtmfblrserwaeazw</code></p>
+<p>Must be at least 8 characters. Example: <code>ylzyyogvusjqajxqxglszwrlegtwekqhzp</code></p>
         </div>
         </form>
 

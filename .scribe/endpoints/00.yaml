@@ -12,9 +12,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Display a listing of the resource.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -34,28 +35,28 @@ endpoints:
         name: 'products[].id'
         description: ''
         required: true
-        example: sed
+        example: veniam
         type: string
         custom: []
       'products[].quantity':
         name: 'products[].quantity'
         description: ''
         required: true
-        example: 9
+        example: 3
         type: integer
         custom: []
       'products[].cost':
         name: 'products[].cost'
         description: ''
         required: true
-        example: 601.0
+        example: 56.703
         type: number
         custom: []
       'products[].price':
         name: 'products[].price'
         description: ''
         required: true
-        example: 2056575.0
+        example: 33.03493
         type: number
         custom: []
       'products[].supplier_id':
@@ -68,14 +69,29 @@ endpoints:
     cleanBodyParameters:
       products:
         -
-          id: sed
-          quantity: 9
-          cost: 601.0
-          price: 2056575.0
+          id: veniam
+          quantity: 3
+          cost: 56.703
+          price: 33.03493
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 422
+        content: '{"message":"The selected products.0.id is invalid.","errors":{"products.0.id":["The selected products.0.id is invalid."]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=TuyaxHm5KKyZg0l0ZfR7QCIzo2jTuAZ0bfreERXc; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -91,9 +107,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -106,17 +123,21 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"purchase":6869.84000000000014551915228366851806640625,"revenue":-111233968.1599999964237213134765625,"saels":111240838}'
+        content: '{"purchase":0,"revenue":0,"saels":0,"balance":0}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '59'
+          x-ratelimit-remaining: '58'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=g32sQ9jRrt5vN7nwUgKEOWCZa8rn6LQqZeHdfK8W; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -132,9 +153,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -147,17 +169,67 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"storeMovement":[{"date":"January","views":1},{"date":"December","views":168865}],"bestSelling":[{"item_name":"Pepsi 300ml","sales":37482},{"item_name":"Safia Water 600ml","sales":21658},{"item_name":"Capo Fresh Milk 1L","sales":15980},{"item_name":"Looli Beef Sausage 500g","sales":15446},{"item_name":"Capo Set Yogurt 800g","sales":15266}],"leastSelling":[{"item_name":null,"sales":2},{"item_name":"Yara Sunflower Oil 1L","sales":2826},{"item_name":"Alnasr Sesame Oil 225ml","sales":2856},{"item_name":"Alwaha Luxury Tea 100g","sales":3506},{"item_name":"Butterfly Tomato Paste 400g","sales":3604}],"lowStock":[{"barcode":"5285000395164","stock_quantity":0},{"barcode":"6217000119951","stock_quantity":250},{"barcode":"6224001125010","stock_quantity":300},{"barcode":"8212634901116","stock_quantity":350},{"barcode":"6161106641055","stock_quantity":400}]}'
+        content: '{"storeMovement":[],"bestSelling":[],"leastSelling":[],"lowStock":[]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '58'
+          x-ratelimit-remaining: '57'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=lMFdc5EMB8VnbFdW1823mojOq3MJKWBehUK8R5HU; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/sales_report
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '56'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=y6ECrjJcIzPSqEn1gIvs9MEpIoTkx9oMZaoxMro9; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -173,9 +245,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Display a listing of the resource.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -188,17 +261,21 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":4,"barcode":"5285000395164","item_name":null,"stock_quantity":"0","description":null,"expiration_date":" 08\/01\/2023","cost":23,"category":null,"price":null,"created_at":"2022-12-15T18:41:02.000000Z","updated_at":"2022-12-31T10:12:22.000000Z"},{"id":5,"barcode":"8212633832015","item_name":null,"stock_quantity":"600","description":null,"expiration_date":" 12\/01\/2024","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":6,"barcode":"12000052392","item_name":null,"stock_quantity":"500","description":null,"expiration_date":" 06\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":7,"barcode":"6161106641055","item_name":null,"stock_quantity":"400","description":null,"expiration_date":" 15\/10\/2022","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":8,"barcode":"6161106640560","item_name":null,"stock_quantity":"600","description":null,"expiration_date":" 08\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":9,"barcode":"8212634901116","item_name":null,"stock_quantity":"350","description":null,"expiration_date":" 12\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":10,"barcode":"6224007562109","item_name":null,"stock_quantity":"650","description":null,"expiration_date":" 01\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":11,"barcode":"6161106640133","item_name":null,"stock_quantity":"700","description":null,"expiration_date":" 12\/01\/2024","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":12,"barcode":"6161106640430","item_name":null,"stock_quantity":"600","description":null,"expiration_date":" 12\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":13,"barcode":"6161106640089","item_name":null,"stock_quantity":"400","description":null,"expiration_date":" 06\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":14,"barcode":"6224001125010","item_name":null,"stock_quantity":"300","description":null,"expiration_date":" 12\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":15,"barcode":"8210145612316","item_name":null,"stock_quantity":"500","description":null,"expiration_date":" 12\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":16,"barcode":"6217000119951","item_name":null,"stock_quantity":"250","description":null,"expiration_date":" 06\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":17,"barcode":"6161106641192","item_name":null,"stock_quantity":"550","description":null,"expiration_date":" 15\/10\/2022","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":18,"barcode":"6297000851112","item_name":null,"stock_quantity":"700","description":null,"expiration_date":" 12\/01\/2024","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"},{"id":19,"barcode":"8210040356728","item_name":null,"stock_quantity":"400","description":null,"expiration_date":" 12\/01\/2023","cost":null,"category":null,"price":null,"created_at":"2022-12-28T18:41:02.000000Z","updated_at":"2022-12-28T18:41:02.000000Z"}]}'
+        content: '{"data":[]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '57'
+          x-ratelimit-remaining: '55'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=45DJ40A1f5DCOByGtkquD7gOG2EoCLIUgpKUtqwO; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -214,9 +291,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Store a newly created resource in storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -228,171 +306,20 @@ endpoints:
         name: barcode
         description: ''
         required: true
-        example: ut
+        example: ipsum
         type: string
         custom: []
       item_name:
         name: item_name
         description: 'Must not be greater than 256 characters.'
         required: true
-        example: c
+        example: fqayrkpuazhcvf
         type: string
         custom: []
       stock_quantity:
         name: stock_quantity
         description: ''
         required: true
-        example: 2
-        type: integer
-        custom: []
-      description:
-        name: description
-        description: ''
-        required: false
-        example: null
-        type: string
-        custom: []
-      expiration_date:
-        name: expiration_date
-        description: 'Must be a valid date.'
-        required: false
-        example: '2023-01-02T14:44:57'
-        type: string
-        custom: []
-      cost:
-        name: cost
-        description: ''
-        required: true
-        example: 14818418.28
-        type: number
-        custom: []
-      category:
-        name: category
-        description: ''
-        required: true
-        example: 498.0
-        type: number
-        custom: []
-      price:
-        name: price
-        description: ''
-        required: true
-        example: 9223810.1
-        type: number
-        custom: []
-    cleanBodyParameters:
-      barcode: ut
-      item_name: c
-      stock_quantity: 2
-      expiration_date: '2023-01-02T14:44:57'
-      cost: 14818418.28
-      category: 498.0
-      price: 9223810.1
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: 'api/inventory/{id}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display the specified resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the inventory.'
-        required: true
-        example: 4
-        type: integer
-        custom: []
-    cleanUrlParameters:
-      id: 4
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"data":{"id":4,"barcode":"5285000395164","item_name":null,"stock_quantity":"0","description":null,"expiration_date":" 08\/01\/2023","cost":23,"category":null,"price":null,"created_at":"2022-12-15T18:41:02.000000Z","updated_at":"2022-12-31T10:12:22.000000Z"}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '56'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/inventory/{id}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update the specified resource in storage.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the inventory.'
-        required: true
-        example: 4
-        type: integer
-        custom: []
-    cleanUrlParameters:
-      id: 4
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      barcode:
-        name: barcode
-        description: ''
-        required: false
-        example: vel
-        type: string
-        custom: []
-      item_name:
-        name: item_name
-        description: 'Must not be greater than 256 characters.'
-        required: false
-        example: kudjg
-        type: string
-        custom: []
-      stock_quantity:
-        name: stock_quantity
-        description: ''
-        required: false
         example: 20
         type: integer
         custom: []
@@ -407,42 +334,235 @@ endpoints:
         name: expiration_date
         description: 'Must be a valid date.'
         required: false
-        example: '2023-01-02T14:44:57'
+        example: '2023-01-14T12:43:10'
+        type: string
+        custom: []
+      cost:
+        name: cost
+        description: ''
+        required: true
+        example: 2099.653
+        type: number
+        custom: []
+      category:
+        name: category
+        description: ''
+        required: true
+        example: dignissimos
+        type: string
+        custom: []
+      price:
+        name: price
+        description: ''
+        required: true
+        example: 6.767915438
+        type: number
+        custom: []
+    cleanBodyParameters:
+      barcode: ipsum
+      item_name: fqayrkpuazhcvf
+      stock_quantity: 20
+      expiration_date: '2023-01-14T12:43:10'
+      cost: 2099.653
+      category: dignissimos
+      price: 6.767915438
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: '{"data":{"barcode":"ipsum","item_name":"fqayrkpuazhcvf","stock_quantity":20,"expiration_date":"2023-01-14T12:43:10","cost":2099.65299999999979263520799577236175537109375,"category":"dignissimos","price":6.76791543800000017228057913598604500293731689453125,"user_id":1,"updated_at":"2023-01-14T12:43:10.000000Z","created_at":"2023-01-14T12:43:10.000000Z","id":1}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '54'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=R7GWfYjnYJnjb3UELQx3uv8sGLmulKgRuO79ssCR; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/inventory/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the inventory.'
+        required: true
+        example: 14
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 14
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Inventory] 14"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '53'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=52Z8RTBqYPpvlHlEJMJTKMlBlJLeL4pV7MYmyYAx; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/inventory/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the inventory.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      barcode:
+        name: barcode
+        description: ''
+        required: false
+        example: qui
+        type: string
+        custom: []
+      item_name:
+        name: item_name
+        description: 'Must not be greater than 256 characters.'
+        required: false
+        example: wtuqboxctqwzlcabfwdzjuc
+        type: string
+        custom: []
+      stock_quantity:
+        name: stock_quantity
+        description: ''
+        required: false
+        example: 9
+        type: integer
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: false
+        example: null
+        type: string
+        custom: []
+      expiration_date:
+        name: expiration_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2023-01-14T12:43:10'
         type: string
         custom: []
       cost:
         name: cost
         description: ''
         required: false
-        example: 323.15683112
+        example: 35.56
         type: number
         custom: []
       category:
         name: category
         description: ''
         required: false
-        example: 730092.5383618
+        example: 7.189324
         type: number
         custom: []
       price:
         name: price
         description: ''
         required: false
-        example: 43173881.016246
+        example: 1713.8
         type: number
         custom: []
     cleanBodyParameters:
-      barcode: vel
-      item_name: kudjg
-      stock_quantity: 20
-      expiration_date: '2023-01-02T14:44:57'
-      cost: 323.15683112
-      category: 730092.5383618
-      price: 43173881.016246
+      barcode: qui
+      item_name: wtuqboxctqwzlcabfwdzjuc
+      stock_quantity: 9
+      expiration_date: '2023-01-14T12:43:10'
+      cost: 35.56
+      category: 7.189324
+      price: 1713.8
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Inventory] 1"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '52'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=yTcnRb4UA6AoiBzFFkzrL3S8ApqSV5QLCDfGp3Th; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -458,9 +578,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Remove the specified resource from storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -468,19 +589,37 @@ endpoints:
         name: id
         description: 'The ID of the inventory.'
         required: true
-        example: 4
+        example: 3
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 4
+      id: 3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Inventory] 3"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '51'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=5CeOjZWb0euRBHwQiic3rBqPaFRjJlIOT7EX294T; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -496,9 +635,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Display a listing of the resource.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -511,17 +651,21 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":1,"name":"sdsd","phone":123,"created_at":"2022-12-31T10:15:57.000000Z","updated_at":"2022-12-31T10:15:57.000000Z"}]}'
+        content: '{"data":[]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '55'
+          x-ratelimit-remaining: '50'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=igBN8D0gBxv5R1bdzlpKHXXfeF6cU1tci5EQ7SZm; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -537,9 +681,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Store a newly created resource in storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -551,23 +696,41 @@ endpoints:
         name: name
         description: 'Must not be greater than 256 characters.'
         required: true
-        example: windayn
+        example: obpxrnpxjdaegqrovkflaca
         type: string
         custom: []
       phone:
         name: phone
         description: ''
         required: true
-        example: 1
-        type: integer
+        example: quaerat
+        type: string
         custom: []
     cleanBodyParameters:
-      name: windayn
-      phone: 1
+      name: obpxrnpxjdaegqrovkflaca
+      phone: quaerat
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '49'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=lhAbRQjIULt1lMmIPIpSYc3HoU07nQJRlKjXrN1Y; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -583,9 +746,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Display the specified resource.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -593,11 +757,11 @@ endpoints:
         name: id
         description: 'The ID of the supplier.'
         required: true
-        example: 1
+        example: 7
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 7
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -605,18 +769,25 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 200
-        content: '{"data":{"id":1,"name":"sdsd","phone":123,"created_at":"2022-12-31T10:15:57.000000Z","updated_at":"2022-12-31T10:15:57.000000Z","invoices":[{"id":1,"barcode":"5285000395164","item_name":" Indomie Vegetable Flavor 70g","category":"Ingredient","description":"Pastas","product_life_in_days":240,"size":"70","unit_of_measure":"g","measurement_class":"mass","seasonality":null,"cost":108.3299999999999982946974341757595539093017578125,"price":130,"min_price":40,"max_price":170,"created_at":"2022-12-28T18:59:37.000000Z","updated_at":"2022-12-28T18:59:37.000000Z","supplier_id":1}]}}'
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Supplier] 7"
+          }
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '54'
+          x-ratelimit-remaining: '48'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=5IZAAKvo6qrCW6nsSzJW408QCNlbKF29i8GWyuMZ; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -633,9 +804,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Update the specified resource in storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -643,11 +815,11 @@ endpoints:
         name: id
         description: 'The ID of the supplier.'
         required: true
-        example: 1
+        example: 8
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 8
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -655,23 +827,41 @@ endpoints:
         name: name
         description: 'Must not be greater than 256 characters.'
         required: true
-        example: gobvj
+        example: hlf
         type: string
         custom: []
       phone:
         name: phone
         description: ''
         required: true
-        example: 11
-        type: integer
+        example: accusantium
+        type: string
         custom: []
     cleanBodyParameters:
-      name: gobvj
-      phone: 11
+      name: hlf
+      phone: accusantium
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Supplier] 8"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '47'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=orbYexlwd7Sl9PJAvrq4OgRh1EG8cGpTO5QXrnGR; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -687,9 +877,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Remove the specified resource from storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -697,19 +888,99 @@ endpoints:
         name: id
         description: 'The ID of the supplier.'
         required: true
-        example: 1
+        example: 4
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Supplier] 4"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '46'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=6skzFl2t5748mdbw8YwK3AdsomqLXmdAhpEXjOgD; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/change_manager_password
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      password:
+        name: password
+        description: 'Must be at least 8 characters.'
+        required: true
+        example: 'K"JLd>?m"{43{YIHUwwS'
+        type: string
+        custom: []
+      new_password:
+        name: new_password
+        description: 'Must be at least 8 characters.'
+        required: true
+        example: tlanphkwuxjijxkvsghvklerjtzzuxsfjfloeaqxwuorqrsjgom
+        type: string
+        custom: []
+    cleanBodyParameters:
+      password: 'K"JLd>?m"{43{YIHUwwS'
+      new_password: tlanphkwuxjijxkvsghvklerjtzzuxsfjfloeaqxwuorqrsjgom
+    fileParameters: []
+    responses:
+      -
+        status: 422
+        content: '{"message":["The password is incorrect."]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '45'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=g7ejdedK4kxf9kQ3PkZlP5aPmMYxEGxCOz0FVVaN; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -725,9 +996,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Display a listing of the resource.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -745,12 +1017,16 @@ endpoints:
           content-type: 'text/html; charset=UTF-8'
           cache-control: 'no-cache, private'
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '53'
+          x-ratelimit-remaining: '44'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=ozETfOGUr3tauAJRcoguVYoZ8V53CdbKsnsE6xtK; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -766,9 +1042,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Store a newly created resource in storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -795,25 +1072,40 @@ endpoints:
         name: 'products[].id'
         description: ''
         required: true
-        example: corrupti
+        example: ipsum
         type: string
         custom: []
       'products[].quantity':
         name: 'products[].quantity'
         description: ''
         required: true
-        example: 16
+        example: 9
         type: integer
         custom: []
     cleanBodyParameters:
       products:
         -
-          id: corrupti
-          quantity: 16
+          id: ipsum
+          quantity: 9
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 422
+        content: '{"message":"The selected products.0.id is invalid.","errors":{"products.0.id":["The selected products.0.id is invalid."]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '43'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=SMLavTgGBsGoMj07csz2gmHgTUPvbQcTvDBLVwl9; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -829,9 +1121,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Display the specified resource.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -839,11 +1132,11 @@ endpoints:
         name: id
         description: 'The ID of the sale.'
         required: true
-        example: 1
+        example: 6
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 6
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -851,18 +1144,25 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 200
-        content: ''
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Sale] 6"
+          }
         headers:
-          content-type: 'text/html; charset=UTF-8'
           cache-control: 'no-cache, private'
+          content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '52'
+          x-ratelimit-remaining: '42'
           access-control-allow-origin: '*'
+          set-cookie: 'pos_session=3mrp7tYMYXyHH6Fu3H2Zi6NrjzS0YV0T9Z3biYpK; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -879,9 +1179,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Update the specified resource in storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -889,19 +1190,37 @@ endpoints:
         name: id
         description: 'The ID of the sale.'
         required: true
-        example: 1
+        example: 4
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Sale] 4"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '41'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=PnxyROZglsvxJWzl03oDKQRpKQWFi9DJbeVXVpM8; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -917,9 +1236,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Remove the specified resource from storage.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -927,19 +1247,37 @@ endpoints:
         name: id
         description: 'The ID of the sale.'
         required: true
-        example: 1
+        example: 5
         type: integer
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Models\\Sale] 5"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '40'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=POfqxk8wAZuRz3boJxRUxVnVzuXyouFLRmu9NtNU; expires=Sat, 14 Jan 2023 14:43:10 GMT; Max-Age=7199; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -955,9 +1293,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -965,19 +1304,34 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      password:
-        name: password
+      manager_password:
+        name: manager_password
         description: ''
         required: true
-        example: 'ivF=9iF+_u07HZ?C'
+        example: quas
         type: string
         custom: []
     cleanBodyParameters:
-      password: 'ivF=9iF+_u07HZ?C'
+      manager_password: quas
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: '{"message":["These credentials do not match our records."]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '39'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=uJ1nXotRrNRQ675H02Nw2K1DdhINBfVTxzhq5Lxc; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -993,9 +1347,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1007,23 +1362,38 @@ endpoints:
         name: password
         description: 'Must be at least 8 characters.'
         required: true
-        example: 'g<Dp74$f}Uv+a?*Ke'
+        example: '`HNMnif'
         type: string
         custom: []
       new_password:
         name: new_password
         description: 'Must be at least 8 characters.'
         required: true
-        example: nopxhwqpozroqgbmlbmxdxhecdpnkrluwlfayijepphoajhyfojnsvyztiwcghwzabunuhtvnlrxeblalpeqh
+        example: etyvgjoiazvguifxiugdqznijifmaktbpgylckjebeixoetxodedwjoyhgphfwrksqlfhiuzqontejdxwtumskj
         type: string
         custom: []
     cleanBodyParameters:
-      password: 'g<Dp74$f}Uv+a?*Ke'
-      new_password: nopxhwqpozroqgbmlbmxdxhecdpnkrluwlfayijepphoajhyfojnsvyztiwcghwzabunuhtvnlrxeblalpeqh
+      password: '`HNMnif'
+      new_password: etyvgjoiazvguifxiugdqznijifmaktbpgylckjebeixoetxodedwjoyhgphfwrksqlfhiuzqontejdxwtumskj
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 422
+        content: '{"message":"The password must be at least 8 characters.","errors":{"password":["The password must be at least 8 characters."]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '38'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=qj5wbsTeaooaEjnb8CVnZ511qqNAsmQoAKwVx8YK; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -1031,7 +1401,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/change_manager_password
+    uri: api/logout
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -1039,37 +1409,40 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      password:
-        name: password
-        description: 'Must be at least 8 characters.'
-        required: true
-        example: '}}>:eT!*#ul?C~:n*N'
-        type: string
-        custom: []
-      new_password:
-        name: new_password
-        description: 'Must be at least 8 characters.'
-        required: true
-        example: olvtjgibhaugdtahcpllhefou
-        type: string
-        custom: []
-    cleanBodyParameters:
-      password: '}}>:eT!*#ul?C~:n*N'
-      new_password: olvtjgibhaugdtahcpllhefou
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '37'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=E7zb1SwVt3iJPVlFEzqtYNjeLyKARiGG2Wj7Mvou; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -1085,9 +1458,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1099,23 +1473,38 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: delmer.damore@example.org
+        example: wolf.jada@example.net
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: _TfU7WNT
+        example: 'kRj-:5=Lk'
         type: string
         custom: []
     cleanBodyParameters:
-      email: delmer.damore@example.org
-      password: _TfU7WNT
+      email: wolf.jada@example.net
+      password: 'kRj-:5=Lk'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 404
+        content: '{"message":["These credentials do not match our records."]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '36'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=fjzX6LgLVWtSbMr7Fac11k6AZGMniClzhOXQVo50; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
@@ -1131,9 +1520,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1145,39 +1535,54 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: jamison61@example.org
+        example: emann@example.org
         type: string
         custom: []
       name:
         name: name
         description: 'Must not be greater than 256 characters.'
         required: true
-        example: wyq
+        example: defpectuartlffmglyj
         type: string
         custom: []
       password:
         name: password
         description: 'Must be at least 8 characters.'
         required: true
-        example: "BuD4mzp',E(wI-S,"
+        example: '3)L-=;Ryrnil"%^w'
         type: string
         custom: []
       manager_password:
         name: manager_password
         description: 'Must be at least 8 characters.'
         required: true
-        example: hsyqrgkkvlrkxwltwglwjlgnmwpxsartdgjxrjbhcmlpaicxrvfibdtjfhnuubgnuuddtxtmfblrserwaeazw
+        example: ylzyyogvusjqajxqxglszwrlegtwekqhzp
         type: string
         custom: []
     cleanBodyParameters:
-      email: jamison61@example.org
-      name: wyq
-      password: "BuD4mzp',E(wI-S,"
-      manager_password: hsyqrgkkvlrkxwltwglwjlgnmwpxsartdgjxrjbhcmlpaicxrvfibdtjfhnuubgnuuddtxtmfblrserwaeazw
+      email: emann@example.org
+      name: defpectuartlffmglyj
+      password: '3)L-=;Ryrnil"%^w'
+      manager_password: ylzyyogvusjqajxqxglszwrlegtwekqhzp
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 201
+        content: '{"user":{"email":"emann@example.org","name":"defpectuartlffmglyj","type":1,"updated_at":"2023-01-14T12:43:11.000000Z","created_at":"2023-01-14T12:43:11.000000Z","id":8},"token":"12|rz8oJS4qkzVBpvb02ErqlAUa1YGZ8MBDLpWjVxNH"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '35'
+          access-control-allow-origin: '*'
+          set-cookie: 'pos_session=gE0oLOPgCroARnBhVx7ycubJPUd4NCgrUIPOlBLB; expires=Sat, 14 Jan 2023 14:43:11 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 9|Zsx1UqOEuCJjunwfRd053DeTdm2X9zQOKkn41liW'
     controller: null
     method: null
     route: null
