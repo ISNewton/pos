@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
         Route::get('reports', [ReportController::class, 'sales']);
 
+        Route::get('sales_report', [ReportController::class, 'salesReport']);
+
         Route::apiResource('inventory', InventoryController::class);
         Route::apiResource('suppliers', SupplierController::class);
 

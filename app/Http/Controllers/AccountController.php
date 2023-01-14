@@ -26,7 +26,7 @@ class AccountController extends Controller
             return response([
                 'purchase' => $purchase,
                 'revenue' => $revenue,
-                'saels' => $sales->sales,
+                'saels' => $sales->sales ?? 0,
                 'balance' => $revenue,
             ]);
     }

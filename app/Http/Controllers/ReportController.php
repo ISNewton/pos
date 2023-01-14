@@ -78,7 +78,7 @@ class ReportController extends Controller
             $q->whereBetween('created_at', [request()->from, request()->to]);
 
     }
-    public function dashbord()
+    public function salesReport()
     {
         $sales = Sale::query()
         ->where('user_id',Auth::id())
@@ -87,13 +87,6 @@ class ReportController extends Controller
         ->limit(10)
         ->get();
 
-        // $storeMovement = Sale::query()
-        //     ->selectRaw('COUNT(*) as movement')
-        //     ->groupBy('created_at')
-        //     ->get();
-
-        // dd($storeMovement);
-
-        return $sales;
+        return SaleResource::collection($sales);
     }
 }
