@@ -14,9 +14,16 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = Supplier::where('user_id',Auth::id())->get();
+        $suppliers = Supplier::where('user_id',Auth::id())
+        ->when($request->has('phone'),function($q) use($request) {
+            $q->where('phone','LIKE',"%{$request->phone}%");
+        })
+        ->when($request->has('name'),function($q) use($request) {
+            $q->where('name',$request->name);
+        })
+        ->get();
 
         return SupplierResource::collection($suppliers);
     }

@@ -26,8 +26,6 @@ class PurchaseController extends Controller
             'products.*.quantity' => 'required|integer',
             'products.*.cost' => 'required|numeric',
             'products.*.price' => 'required|numeric',
-            'products.*.price' => 'required|numeric',
-            'products.*.price' => 'required|numeric',
             'products.*.supplier_id' => 'nullalbe|exists:suppliers,id',
             // '*.*.item_name' => 'required|numeric',
         ]);
