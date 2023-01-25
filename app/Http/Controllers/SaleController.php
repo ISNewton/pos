@@ -36,29 +36,32 @@ class SaleController extends Controller
         //     'products.*.quantity' => 'required|integer',
         // ]);
 
-        // return $request->products;
+        $this->validate($request, [
+            'id' => 'required|exists:inventories,id',
+            'quantity' => 'required|integer',
+        ]);
 
         return DB::transaction(function () use ($request) {
 
-            foreach ($request->products as $product) {
+            // foreach ($request->products as $product) {
 
-                $inventory = Inventory::find($product['id']);
+            $inventory = Inventory::find($request->id);
 
-                Sale::create([
-                    'inventory_id' => $inventory->id,
-                    'barcode' => $inventory->barcode,
-                    'sold_quantity' => $product['quantity'],
-                    'price' => $inventory->price,
-                    'item_name' => $inventory->item_name,
-                    'date_time' => today()->format('Y-m-d'),
-                    'user_id' => Auth::id()
-                ]);
+            Sale::create([
+                'inventory_id' => $inventory->id,
+                'barcode' => $inventory->barcode,
+                'sold_quantity' => $request->quantity,
+                'price' => $inventory->price,
+                'item_name' => $inventory->item_name,
+                'date_time' => today()->format('Y-m-d'),
+                'user_id' => Auth::id()
+            ]);
 
 
-                $inventory->update([
-                    'stock_quantity' => $inventory->stock_quantity - $product['quantity']
-                ]);
-            }
+            $inventory->update([
+                'stock_quantity' => $inventory->stock_quantity - $request->quantity
+            ]);
+            // }
 
             return response()->noContent(201);
         });
