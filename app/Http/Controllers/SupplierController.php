@@ -21,7 +21,7 @@ class SupplierController extends Controller
             $q->where('phone','LIKE',"%{$request->phone}%");
         })
         ->when($request->has('name'),function($q) use($request) {
-            $q->where('name',$request->name);
+            $q->where('name','LIKE',"%{$request->name}%");
         })
         ->get();
 

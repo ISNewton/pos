@@ -31,7 +31,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'prducts' => 'array',
+            'products' => 'array',
             'products.*.id' => 'required|exists:inventories,id',
             'products.*.quantity' => 'required|integer',
         ]);
