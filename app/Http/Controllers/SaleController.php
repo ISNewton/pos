@@ -30,11 +30,11 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'products' => 'array',
-            'products.*.id' => 'required|exists:inventories,id',
-            'products.*.quantity' => 'required|integer',
-        ]);
+        // $this->validate($request, [
+        //     'products' => 'array',
+        //     'products.*.id' => 'required|exists:inventories,id',
+        //     'products.*.quantity' => 'required|integer',
+        // ]);
 
         return $request->products;
 
