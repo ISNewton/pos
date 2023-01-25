@@ -36,7 +36,7 @@ class SaleController extends Controller
         //     'products.*.quantity' => 'required|integer',
         // ]);
 
-        return $request->products;
+        // return $request->products;
 
         return DB::transaction(function () use ($request) {
 
