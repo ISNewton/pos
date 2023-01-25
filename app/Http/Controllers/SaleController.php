@@ -31,10 +31,12 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'products' => 'required|array',
+            'products' => 'array',
             'products.*.id' => 'required|exists:inventories,id',
             'products.*.quantity' => 'required|integer',
         ]);
+
+        return $request->products;
 
         return DB::transaction(function () use ($request) {
 
