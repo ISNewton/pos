@@ -55,6 +55,7 @@ class SaleController extends Controller
                 'item_name' => $inventory->item_name,
                 'date_time' => today()->format('Y-m-d'),
                 'user_id' => Auth::id()
+                
             ]);
 
 

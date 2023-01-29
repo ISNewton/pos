@@ -21,37 +21,34 @@ class PurchaseController extends Controller
     public function purchase(Request $request)
     {
         $this->validate($request, [
-            'products' => 'array',
-            'products.*.id' => 'required|exists:inventories,id',
-            'products.*.quantity' => 'required|integer',
-            'products.*.cost' => 'required|numeric',
-            'products.*.price' => 'required|numeric',
-            'products.*.supplier_id' => 'nullalbe|exists:suppliers,id',
-            // '*.*.item_name' => 'required|numeric',
+            'id' => 'required|exists:inventories,id',
+            'quantity' => 'required|integer',
+            'cost' => 'required|numeric',
+            'price' => 'required|numeric',
+            'supplier_id' => 'nullalbe|exists:suppliers,id',
         ]);
 
         return DB::transaction(function () use($request) {
             $products = [];
-            foreach ($request->products as $product) {
+            // foreach ($request->products as $product) {
 
-                $inventory = Inventory::find($product['id']);
+                $inventory = Inventory::find($request->id);
 
                $inventory->update([
-                    'stock_quantity' => $product['quantity'],
-                    'cost' => $product['cost'],
+                    'stock_quantity' => $request->quantity,
+                    'cost' => $request->cost,
                 ]);
 
-                $products[] = $inventory;
 
                 $generalInfo = GeneralInformation::where('barcode', $inventory->barcode)->first();
 
                 if ($generalInfo->exists()) {
                     $newGeneralInfo = $generalInfo->replicate();
 
-                    $newGeneralInfo->cost = $product['cost'];
+                    $newGeneralInfo->cost = $request->cost;
 
-                    if(isset($product['supplier_id'])) {
-                    $newGeneralInfo->supplier_id = $product['supplier_id'];
+                    if(isset($request->supplier_id)) {
+                    $newGeneralInfo->supplier_id = $request->supplier_id;
                     }
 
                     $newGeneralInfo->push();
@@ -62,14 +59,14 @@ class PurchaseController extends Controller
                         'price' => $inventory->price,
                         'cost' => $inventory->cost,
                         'category' => $inventory->category,
-                        'supplier_id' =>  isset($product['supplier_id']) ? $product['supplier_id'] : NULL,
+                        'supplier_id' =>  isset($request->supplier_id) ? $request->supplier_id : NULL,
                         'user_id' => Auth::id()
 
                     ]);
                 }
-            }
+            // }
 
-            return InventoryResource::collection($products);
+            return InventoryResource::make($inventory);
         });
     }
 }
