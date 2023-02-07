@@ -25,45 +25,42 @@ class PurchaseController extends Controller
             'quantity' => 'required|integer',
             'cost' => 'required|numeric',
             'price' => 'required|numeric',
-            'supplier_id' => 'nullalbe|exists:suppliers,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
         ]);
 
-        return DB::transaction(function () use($request) {
+        return DB::transaction(function () use ($request) {
             $products = [];
-            // foreach ($request->products as $product) {
 
-                $inventory = Inventory::find($request->id);
+            $inventory = Inventory::find($request->id);
 
-               $inventory->update([
-                    'stock_quantity' => $request->quantity,
-                    'cost' => $request->cost,
-                ]);
+            $inventory->update([
+                'stock_quantity' => $request->quantity,
+                'cost' => $request->cost,
+            ]);
 
+            $generalInfo = GeneralInformation::where('barcode', $inventory->barcode)->first();
 
-                $generalInfo = GeneralInformation::where('barcode', $inventory->barcode)->first();
+            if ($generalInfo->exists()) {
+                $newGeneralInfo = $generalInfo->replicate();
 
-                if ($generalInfo->exists()) {
-                    $newGeneralInfo = $generalInfo->replicate();
+                $newGeneralInfo->cost = $request->cost;
 
-                    $newGeneralInfo->cost = $request->cost;
-
-                    if(isset($request->supplier_id)) {
+                if (isset($request->supplier_id)) {
                     $newGeneralInfo->supplier_id = $request->supplier_id;
-                    }
-
-                    $newGeneralInfo->push();
-
-                } else {
-                    GeneralInformation::create([
-                        'item_name' => $inventory->item_name,
-                        'price' => $inventory->price,
-                        'cost' => $inventory->cost,
-                        'category' => $inventory->category,
-                        'supplier_id' =>  isset($request->supplier_id) ? $request->supplier_id : NULL,
-                        'user_id' => Auth::id()
-
-                    ]);
                 }
+
+                $newGeneralInfo->push();
+            } else {
+                GeneralInformation::create([
+                    'item_name' => $inventory->item_name,
+                    'price' => $inventory->price,
+                    'cost' => $inventory->cost,
+                    'category' => $inventory->category,
+                    'supplier_id' =>  isset($request->supplier_id) ? $request->supplier_id : NULL,
+                    'user_id' => Auth::id()
+
+                ]);
+            }
             // }
 
             return InventoryResource::make($inventory);

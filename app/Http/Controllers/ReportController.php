@@ -52,12 +52,12 @@ class ReportController extends Controller
 
         $lowStock = DB::table('inventories')
             ->select(
-                'barcode',
+                'item_name',
                 DB::raw('sum(stock_quantity) as stock_quantity')
             )
             ->where('user_id',Auth::id())
             ->when(request()->has('from'),fn($q) => $this->checkDate($q))
-            ->groupBy('barcode')
+            ->groupBy('item_name')
             ->orderBy('stock_quantity', 'asc')
             ->limit(5)
             ->get();

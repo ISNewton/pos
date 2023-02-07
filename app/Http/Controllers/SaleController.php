@@ -62,7 +62,6 @@ class SaleController extends Controller
             $inventory->update([
                 'stock_quantity' => $inventory->stock_quantity - $request->quantity
             ]);
-            // }
 
             return response()->noContent(201);
         });
