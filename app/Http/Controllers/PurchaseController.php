@@ -40,7 +40,7 @@ class PurchaseController extends Controller
 
             $generalInfo = GeneralInformation::where('barcode', $inventory->barcode)->first();
 
-            if ($generalInfo->exists()) {
+            if ($generalInfo?->exists()) {
                 $newGeneralInfo = $generalInfo->replicate();
 
                 $newGeneralInfo->cost = $request->cost;
